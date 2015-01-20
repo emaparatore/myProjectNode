@@ -4,7 +4,7 @@
 '$urlRouterProvider',
 function ($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/notFound');
+    $urlRouterProvider.otherwise('/home');
 
     $stateProvider
       .state('products', {
@@ -12,9 +12,9 @@ function ($stateProvider, $urlRouterProvider) {
           templateUrl: '/products.html',
           //controller: 'ProductsController'
       })
-      .state('notFound', {
-          url: '/notFound',
-          templateUrl: '/notFound.html'
+      .state('home', {
+          url: '/home',
+          templateUrl: '/home.html'
       })
       .state('clients', {
           url: '/clients',

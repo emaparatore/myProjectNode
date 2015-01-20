@@ -17,8 +17,8 @@ router.get('/products.html', function (req, res, next) {
 });
 
 /* GET notFound template */
-router.get('/notFound.html', function (req, res, next) {
-    res.render('notFound.html');
+router.get('/home.html', function (req, res, next) {
+    res.render('home.html');
 });
 
 
