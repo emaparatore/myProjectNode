@@ -1,0 +1,370 @@
+﻿
+
+<div ng-controller="ClientsController">
+    <h1>Gestisci i dati dell'azienda</h1>
+    <h2>Clienti</h2>
+    <!-- Button Insert trigger modal -->
+    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#insertClient" ng-click="beginInsertClient()">
+        Nuovo Cliente
+    </button>
+    <!--Tabella Prodotti-->
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Ragione sociale</th>
+                <th>Indirizzo</th>
+                <th>Mail</th>
+                <th>Telefono</th>
+                <th>Giorni Preavviso</th>
+                <th>Modalità pagamento</th>
+                <th>Modalità consegna</th>
+                <th>Fatturato medio</th>
+                <th>Tempo di consegna</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="client in clients">
+                <td>
+                    <!--Bottone modifica-->
+                    <button ng-click="startUpdateClient(client)" type="button"
+                            class="btn btn-default" data-toggle="modal" data-target="#updateClient"
+                            title="Modifica">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </button>
+                    <!--Bottone cancella-->
+                    <button ng-click="startDeleteClient(client)" class="btn btn-default"
+                            data-toggle="tooltip" title="Cancella">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </td>
+                <td>{{client.companyName}}</td>
+                <td>{{client.address}}</td>
+                <td>{{client.mail}}</td>
+                <td>{{client.telephone}}</td>
+                <td>{{client.dayNotice}}</td>
+                <td>{{client.paymentMethod}}</td>
+                <td>{{client.deliveryMethod}}</td>
+                <td>{{client.averageRevenue}}</td>
+                <td>{{client.deliveryTime}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!--Modal Update-->
+    <div class="modal fade" id="updateClient" tabindex="-1" role="dialog" aria-labelledby="updateClientLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="updateClientLabel">Modifica</h4>
+                </div>
+                <div class="modal-body">
+                    <form ng-submit=" updateClientForm.$valid && updateClient()"
+                          name="updateClientForm"
+                          novalidate>
+                        <!--Input ragione sociale-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateClientForm.input1.$valid}">
+                            <label for="updateClientInput1">Ragione sociale</label>
+                            <input class="form-control"
+                                   name="input1"
+                                   id="updateClientInput1"
+                                   ng-model="companyName"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateClientForm.input1.$valid"></span>
+                        </div>
+                        <!--Input indirizzo-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateClientForm.input2.$valid}">
+                            <label for="updateClientInput2">Indirizzo</label>
+                            <input class="form-control"
+                                   name="input2"
+                                   id="updateClientInput2"
+                                   ng-model="address"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateClientForm.input2.$valid"></span>
+                        </div>
+                        <!--Input mail-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateClientForm.input3.$valid}">
+                            <label for="updateClientInput3">E-mail</label>
+                            <input class="form-control"
+                                   name="input3"
+                                   id="updateClientInput3"
+                                   ng-model="mail"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateClientForm.input3.$valid"></span>
+                        </div>
+                        <!--Input Telefono-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateClientForm.input4.$valid}">
+                            <label for="updateClientInput4">Telefono</label>
+                            <input class="form-control"
+                                   name="input4"
+                                   id="updateClientInput4"
+                                   ng-model="telephone"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateClientForm.input4.$valid"></span>
+                        </div>
+                        <!--Input giorni di preavviso-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateClientForm.input5.$valid}">
+                            <label for="updateClientInput5">Giorni di preavviso</label>
+                            <input class="form-control"
+                                   name="input5"
+                                   id="updateClientInput5"
+                                   ng-model="dayNotice"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateClientForm.input5.$valid"></span>
+                        </div>
+                        <!--Input modalita di pagamento-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateClientForm.input6.$valid}">
+                            <label for="updateClientInput6">Modalità di pagamento</label>
+                            <input class="form-control"
+                                   name="input6"
+                                   id="updateClientInput6"
+                                   ng-model="paymentMethod"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateClientForm.input6.$valid"></span>
+                        </div>
+                        <!--Input modalita di consegna-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateClientForm.input7.$valid}">
+                            <label for="updateClientInput7">Modalità di consegna</label>
+                            <input class="form-control"
+                                   name="input7"
+                                   id="updateClientInput7"
+                                   ng-model="deliveryMethod"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateClientForm.input7.$valid"></span>
+                        </div>
+                        <!--Input fatturato medio-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateClientForm.input8.$valid}">
+                            <label for="updateClientInput8">Fatturato medio</label>
+                            <input class="form-control"
+                                   name="input8"
+                                   id="updateClientInput8"
+                                   ng-model="averageRevenue"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateClientForm.input8.$valid"></span>
+                        </div>
+                        <!--Input tempo di consegna-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateClientForm.input9.$valid}">
+                            <label for="updateClientInput9">Tempo di consegna</label>
+                            <input class="form-control"
+                                   name="input9"
+                                   id="updateClientInput8"
+                                   ng-model="deliveryTime"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateClientForm.input9.$valid"></span>
+                        </div>
+                        <button type="submit"
+                                class="btn btn-default">
+                            Modifica
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Insert-->
+    <div class="modal fade" id="insertClient" tabindex="-1" role="dialog" aria-labelledby="insertClientLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"
+                        id="insertClientLabel">
+                        Inserisci un nuovo prodotto
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form ng-submit="insertClientForm.$valid && addClient()"
+                          class="formInsert"
+                          name="insertClientForm"
+                          novalidate>
+                        <!--Input ragione sociale-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertClientForm.input1.$valid}">
+                            <label for="insertClientInput1">Ragione sociale</label>
+                            <input class="form-control"
+                                   name="input1"
+                                   id="insertClientInput1"
+                                   ng-model="companyName"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertClientForm.input1.$valid"></span>
+                        </div>
+                        <!--Input indirizzo-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertClientForm.input2.$valid}">
+                            <label for="insertClientInput2">Indirizzo</label>
+                            <input class="form-control"
+                                   name="input2"
+                                   id="insertClientInput2"
+                                   ng-model="address"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertClientForm.input2.$valid"></span>
+                        </div>
+                        <!--Input mail-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertClientForm.input3.$valid}">
+                            <label for="insertClientInput3">E-mail</label>
+                            <input class="form-control"
+                                   name="input3"
+                                   id="insertClientInput3"
+                                   ng-model="mail"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertClientForm.input3.$valid"></span>
+                        </div>
+                        <!--Input Telefono-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertClientForm.input4.$valid}">
+                            <label for="insertClientInput4">Telefono</label>
+                            <input class="form-control"
+                                   name="input4"
+                                   id="insertClientInput4"
+                                   ng-model="telephone"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertClientForm.input4.$valid"></span>
+                        </div>
+                        <!--Input giorni di preavviso-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertClientForm.input5.$valid}">
+                            <label for="insertClientInput5">Giorni di preavviso</label>
+                            <input class="form-control"
+                                   name="input5"
+                                   id="insertClientInput5"
+                                   ng-model="dayNotice"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertClientForm.input5.$valid"></span>
+                        </div>
+                        <!--Input modalita di pagamento-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertClientForm.input6.$valid}">
+                            <label for="insertClientInput6">Modalità di pagamento</label>
+                            <input class="form-control"
+                                   name="input6"
+                                   id="insertClientInput6"
+                                   ng-model="paymentMethod"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertClientForm.input6.$valid"></span>
+                        </div>
+                        <!--Input modalita di consegna-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertClientForm.input7.$valid}">
+                            <label for="insertClientInput7">Modalità di consegna</label>
+                            <input class="form-control"
+                                   name="input7"
+                                   id="insertClientInput7"
+                                   ng-model="deliveryMethod"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertClientForm.input7.$valid"></span>
+                        </div>
+                        <!--Input fatturato medio-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertClientForm.input8.$valid}">
+                            <label for="insertClientInput8">Fatturato medio</label>
+                            <input class="form-control"
+                                   name="input8"
+                                   id="insertClientInput8"
+                                   ng-model="averageRevenue"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertClientForm.input8.$valid"></span>
+                        </div>
+                        <!--Input tempo di consegna-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertClientForm.input9.$valid}">
+                            <label for="insertClientInput9">Tempo di consegna</label>
+                            <input class="form-control"
+                                   name="input9"
+                                   id="insertClientInput8"
+                                   ng-model="deliveryTime"
+                                   required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertClientForm.input9.$valid"></span>
+                        </div>
+                        <button ng-click="focusInsertClient()"
+                                type="submit"
+                                class="btn btn-default">
+                            Crea
+                        </button>
+                    </form>
+                    <!-- <div id="successInsert" class="alert alert-success" role="alert" >
+                         Record Inserito Corretamente
+                     </div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal Delete-->
+    <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="deleteClientLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"
+                        id="deleteClientLabel">
+                        Cancella
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        Vuoi rimuovere il cliente <b>{{clients[indexDelete].companyName}}</b>?
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button ng-click="deleteClient()" type="button" class="btn btn-default" data-dismiss="modal">Sì</button>
+                    <button id="noDeleteButton" type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
