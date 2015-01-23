@@ -6,11 +6,18 @@ function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/home');
 
+    //TO DO aggiungere controller allo stateProvider
+
     $stateProvider
       .state('products', {
           url: '/products',
           templateUrl: '/products.html',
-          //controller: 'ProductsController'
+          controller:  'ProductsController',
+          resolve : {
+              postPromise: ['products', function (products) {
+                  return products.getAll();
+              }]
+          }
       })
       .state('home', {
           url: '/home',

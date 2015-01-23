@@ -48,7 +48,7 @@ function ($scope, products) {
    
     //funzione che produce l'inserimento
     $scope.addProduct = function () {
-        $scope.products.push({
+        products.create({
             name: $scope.productName,
             timeDeposit: $scope.timeDeposit,
             maxDailyProduction: $scope.maxDailyProduction

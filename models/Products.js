@@ -2,7 +2,7 @@
 
 var ProductSchema = new mongoose.Schema({
   name: String,
-  timeDetimeDeposit: { type: Number, default: 1 },
+  timeDeposit: { type: Number, default: 1 },
   maxDailyProduction: { type: Number, default: 1 }
 });
 

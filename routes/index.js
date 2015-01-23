@@ -3,14 +3,24 @@ var router = express.Router();
 
 
 var mongoose = require('mongoose');
-var Products = mongoose.model('Product');
+var Product = mongoose.model('Product');
 
 
+/* GET the list of products */
 router.get('/products', function (req, res, next) {
-    Products.find(function (err, posts) {
+    Product.find(function (err, posts) {
         if (err) { return next(err); }
 
         res.json(posts);
+    });
+});
+
+/* PUT a new post in the database */
+router.post('/product', function (req, res, next) {
+    var post = new Product(req.body);
+    post.save(function (err, products) {
+        if (err) { return next(err); }
+        res.json(products);
     });
 });
 
