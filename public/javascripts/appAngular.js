@@ -14,7 +14,7 @@ function ($stateProvider, $urlRouterProvider) {
           templateUrl: '/products.html',
           controller:  'ProductsController',
           resolve : {
-              postPromise: ['products', function (products) {
+              productPromise: ['products', function (products) {
                   return products.getAll();
               }]
           }

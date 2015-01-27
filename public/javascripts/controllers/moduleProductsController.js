@@ -48,15 +48,20 @@ function ($scope, products) {
    
     //funzione che produce l'inserimento
     $scope.addProduct = function () {
+        $('#insertProduct').modal('hide');
         products.create({
             name: $scope.productName,
             timeDeposit: $scope.timeDeposit,
             maxDailyProduction: $scope.maxDailyProduction
+        }, function () {
+            setTimeout(function () {
+                $('#insertConfirm').modal('show');
+            }, 200);
+            $scope.productName = '';
+            $scope.timeDeposit = '';
+            $scope.maxDailyProduction = '';
+            
         });
-        $scope.productName = '';
-        $scope.timeDeposit = '';
-        $scope.maxDailyProduction = '';
-        $('#successInsert').show('slide', 'slow');
     };
 
     //funzione che prepara la cancellazione 
@@ -67,7 +72,13 @@ function ($scope, products) {
 
     //funzione che produce la cancellazione
     $scope.deleteProduct = function () {
-        $scope.products.splice($scope.indexDelete, 1);
+        products.delete($scope.products[$scope.indexDelete]._id, function () {
+            setTimeout(function () {
+                $('#deleteConfirm').modal('show');
+            }, 200);
+            $scope.products.splice($scope.indexDelete, 1);        
+        });
+        
     }
 
     //funzione che prepara il form per la modifica
@@ -83,10 +94,23 @@ function ($scope, products) {
 
     //funzione che produce la modifica
     $scope.updateProduct = function () {
-        $scope.products[indexUpdate].name = $scope.productName;
-        $scope.products[indexUpdate].timeDeposit = $scope.timeDeposit;
-        $scope.products[indexUpdate].maxDailyProduction = $scope.maxDailyProduction;
-        $('#updateProductInput1').focus();
+        $('#updateProduct').modal('hide');
+        var product = {};
+        product.name = $scope.productName;
+        product.timeDeposit = $scope.timeDeposit;
+        product.maxDailyProduction = $scope.maxDailyProduction;
+
+        products.update($scope.products[indexUpdate]._id, product, function () {
+            setTimeout(function () {
+                $('#updateConfirm').modal('show');
+            }, 200);
+            $scope.products[indexUpdate].name = $scope.productName;
+            $scope.products[indexUpdate].timeDeposit = $scope.timeDeposit;
+            $scope.products[indexUpdate].maxDailyProduction = $scope.maxDailyProduction;
+            $('#updateProductInput1').focus();
+        });
+
+        
     };
 
     //$('#successInsert').hide();

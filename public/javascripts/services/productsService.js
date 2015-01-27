@@ -11,9 +11,22 @@
             });
     };
 
-    o.create = function (product) {
-        return $http.post('/product', product).success(function (data) {
+    o.create = function (product, callback) {
+        return $http.put('/product', product).success(function (data) {
             o.products.push(data);
+            callback();
+        });
+    };
+
+    o.delete = function (id, callback) {
+        return $http.delete('/product/' + id).success(function (data) {
+            callback();
+        });
+    };
+
+    o.update = function (id, product, callback) {
+        return $http.post('/product/' + id, product).success(function (data) {
+            callback();
         });
     };
 
