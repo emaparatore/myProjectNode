@@ -30,4 +30,13 @@ function ($stateProvider, $urlRouterProvider) {
 
     
 }])
+.directive('myModalMessage', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            message: '=myMessage'
+        },
+        templateUrl: '/modalMessage.html'
+    };
+});
 

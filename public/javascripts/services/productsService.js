@@ -12,8 +12,8 @@
     };
 
     o.create = function (product, callback) {
-        return $http.put('/product', product).success(function (data) {
-            o.products.push(data);
+        return $http.put('/product', product).success(function (product) {
+            o.products.push(product);
             callback();
         });
     };

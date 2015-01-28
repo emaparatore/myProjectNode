@@ -30,7 +30,7 @@ router.get('/products', function (req, res, next) {
     });
 });
 
-/* PUT a new post in the database */
+/* PUT a new product in the database */
 router.put('/product', function (req, res, next) {
     var post = new Product(req.body);
     post.save(function (err, products) {
@@ -55,10 +55,23 @@ router.get('/products.html', function (req, res, next) {
     res.render('products.html');
 });
 
-/* GET notFound template */
+/* GET home template */
 router.get('/home.html', function (req, res, next) {
     res.render('home.html');
 });
 
+/* GET message template -directive- */
+router.get('/modalMessage.html', function (req, res, next) {
+    res.render('modalMessage.html');
+});
 
+
+/* GET icons bootstrapp */
+//router.get('/fonts/glyphicons-halflings-regular.woff', function (req, res, next) {
+//    res.send('glyphicons-halflings-regular.woff');
+//});
+
+//router.get('/fonts/glyphicons-halflings-regular.ttf', function (req, res, next) {
+//    res.send('glyphicons-halflings-regular.ttf');
+//});
 module.exports = router;

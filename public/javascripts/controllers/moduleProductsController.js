@@ -7,6 +7,7 @@ function ($scope, products) {
     $scope.indexDelete = 0;
     this.indexDelete = "";
     this.lastAction = '';
+    $scope.message = {};
 
     //inizializazione dei campi del form
     $scope.productName = '';
@@ -55,8 +56,11 @@ function ($scope, products) {
             maxDailyProduction: $scope.maxDailyProduction
         }, function () {
             setTimeout(function () {
-                $('#insertConfirm').modal('show');
-            }, 200);
+                $('#modalSuccessMessage').modal('show');
+            }, 500);
+            $scope.message.title = 'Inserimento';
+            $scope.message.body = 'Prodotto inserito corretamente';
+            $scope.message.modalita = 'insert';
             $scope.productName = '';
             $scope.timeDeposit = '';
             $scope.maxDailyProduction = '';
@@ -74,8 +78,11 @@ function ($scope, products) {
     $scope.deleteProduct = function () {
         products.delete($scope.products[$scope.indexDelete]._id, function () {
             setTimeout(function () {
-                $('#deleteConfirm').modal('show');
-            }, 200);
+                $('#modalSuccessMessage').modal('show');
+            }, 500);
+            $scope.message.title = 'Cancellazione';
+            $scope.message.body = 'Prodotto rimosso corretamente';
+            $scope.message.modalita = 'delete';
             $scope.products.splice($scope.indexDelete, 1);        
         });
         
@@ -103,11 +110,17 @@ function ($scope, products) {
         products.update($scope.products[indexUpdate]._id, product, function () {
             setTimeout(function () {
                 $('#updateConfirm').modal('show');
-            }, 200);
+            }, 500);
+            setTimeout(function () {
+                $('#modalSuccessMessage').modal('show');
+            }, 500);
+            $scope.message.title = 'Modifica';
+            $scope.message.body = 'Prodotto modificato corretamente';
+            $scope.message.modalita = 'update';
             $scope.products[indexUpdate].name = $scope.productName;
             $scope.products[indexUpdate].timeDeposit = $scope.timeDeposit;
             $scope.products[indexUpdate].maxDailyProduction = $scope.maxDailyProduction;
-            $('#updateProductInput1').focus();
+            //$('#updateProductInput1').focus();
         });
 
         

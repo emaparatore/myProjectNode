@@ -97,7 +97,8 @@
                         <div class="form-group"
                              ng-class="{'has-success has-feedback': updateClientForm.input3.$valid}">
                             <label for="updateClientInput3">E-mail</label>
-                            <input class="form-control"
+                            <input type="email"
+                                   class="form-control"
                                    name="input3"
                                    id="updateClientInput3"
                                    ng-model="mail"
@@ -121,11 +122,14 @@
                         <div class="form-group"
                              ng-class="{'has-success has-feedback': updateClientForm.input5.$valid}">
                             <label for="updateClientInput5">Giorni di preavviso</label>
-                            <input class="form-control"
+                            <input type="number"
+                                   class="form-control"
                                    name="input5"
                                    id="updateClientInput5"
                                    ng-model="dayNotice"
-                                   required>
+                                   required
+                                   min="0"
+                                   max="60">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="updateClientForm.input5.$valid"></span>
                         </div>
@@ -157,11 +161,13 @@
                         <div class="form-group"
                              ng-class="{'has-success has-feedback': updateClientForm.input8.$valid}">
                             <label for="updateClientInput8">Fatturato medio</label>
-                            <input class="form-control"
+                            <input type="number"
+                                   class="form-control"
                                    name="input8"
                                    id="updateClientInput8"
                                    ng-model="averageRevenue"
-                                   required>
+                                   required
+                                   min="0">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="updateClientForm.input8.$valid"></span>
                         </div>
@@ -173,7 +179,9 @@
                                    name="input9"
                                    id="updateClientInput8"
                                    ng-model="deliveryTime"
-                                   required>
+                                   required
+                                   min="0"
+                                   max="60">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="updateClientForm.input9.$valid"></span>
                         </div>
@@ -241,7 +249,8 @@
                         <div class="form-group"
                              ng-class="{'has-success has-feedback': insertClientForm.input3.$valid}">
                             <label for="insertClientInput3">E-mail</label>
-                            <input class="form-control"
+                            <input type="email"
+                                   class="form-control"
                                    name="input3"
                                    id="insertClientInput3"
                                    ng-model="mail"
@@ -265,11 +274,14 @@
                         <div class="form-group"
                              ng-class="{'has-success has-feedback': insertClientForm.input5.$valid}">
                             <label for="insertClientInput5">Giorni di preavviso</label>
-                            <input class="form-control"
+                            <input type="number"
+                                   class="form-control"
                                    name="input5"
                                    id="insertClientInput5"
                                    ng-model="dayNotice"
-                                   required>
+                                   required
+                                   min="0"
+                                   max="60">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="insertClientForm.input5.$valid"></span>
                         </div>
@@ -301,11 +313,13 @@
                         <div class="form-group"
                              ng-class="{'has-success has-feedback': insertClientForm.input8.$valid}">
                             <label for="insertClientInput8">Fatturato medio</label>
-                            <input class="form-control"
+                            <input type="number"
+                                   class="form-control"
                                    name="input8"
                                    id="insertClientInput8"
                                    ng-model="averageRevenue"
-                                   required>
+                                   required
+                                   min="0">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="insertClientForm.input8.$valid"></span>
                         </div>
@@ -313,11 +327,14 @@
                         <div class="form-group"
                              ng-class="{'has-success has-feedback': insertClientForm.input9.$valid}">
                             <label for="insertClientInput9">Tempo di consegna</label>
-                            <input class="form-control"
+                            <input type="number"
+                                   class="form-control"
                                    name="input9"
                                    id="insertClientInput8"
                                    ng-model="deliveryTime"
-                                   required>
+                                   required
+                                   min="0"
+                                   max="60">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="insertClientForm.input9.$valid"></span>
                         </div>
