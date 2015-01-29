@@ -15,6 +15,7 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/produciFacileDb');
 
 require('./models/Products');
+require('./models/Clients')
 
 var routes = require('./routes/index');
 

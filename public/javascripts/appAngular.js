@@ -25,7 +25,13 @@ function ($stateProvider, $urlRouterProvider) {
       })
       .state('clients', {
           url: '/clients',
-          templateUrl: '/clients.html'
+          templateUrl: '/clients.html',
+          controller: 'ClientsController',
+          resolve: {
+              clientPromise: ['clients', function (clients) {
+                  return clients.getAll();
+              }]
+          }
       });
 
     

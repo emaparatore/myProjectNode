@@ -1,6 +1,6 @@
 ﻿
     
-<!--<div ng-controller="ProductsController">-->
+
 
 <!--Titolo-->
 <div class="row">
@@ -22,25 +22,27 @@
     <div class="col-md-12">
         <form class="form-inline">
             <div class="form-group">
-                <label for="updateProductInput1">Trova</label>
                 <input class="form-control"
                        name="input1"
                        id="idfilterProduct"
                        ng-model="filterProduct"
                        required>
+                <button type="button" class="btn btn-default active">
+                    <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
+                </button>
             </div>
         </form>
     </div>
 </div>
 
+<!--Tabella Prodotti-->
 <div class="row">
     <div class="col-md-12">
-        <!--Tabella Prodotti-->
-        <table class="table  table-bordered table-hover">
+        <table class="table  table-bordered table-hover table-condensed">
             <thead>
                 <tr>
                     <th>
-                        
+
                     </th>
                     <th>Nome</th>
                     <th>Tempo di deposito</th>

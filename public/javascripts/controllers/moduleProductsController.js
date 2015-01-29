@@ -59,7 +59,7 @@ function ($scope, products) {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
             $scope.message.title = 'Inserimento';
-            $scope.message.body = 'Prodotto inserito corretamente';
+            $scope.message.body = 'Prodotto inserito';
             $scope.message.modalita = 'insert';
             $scope.productName = '';
             $scope.timeDeposit = '';
@@ -81,7 +81,7 @@ function ($scope, products) {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
             $scope.message.title = 'Cancellazione';
-            $scope.message.body = 'Prodotto rimosso corretamente';
+            $scope.message.body = 'Prodotto rimosso';
             $scope.message.modalita = 'delete';
             $scope.products.splice($scope.indexDelete, 1);        
         });
@@ -115,7 +115,7 @@ function ($scope, products) {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
             $scope.message.title = 'Modifica';
-            $scope.message.body = 'Prodotto modificato corretamente';
+            $scope.message.body = 'Prodotto modificato';
             $scope.message.modalita = 'update';
             $scope.products[indexUpdate].name = $scope.productName;
             $scope.products[indexUpdate].timeDeposit = $scope.timeDeposit;
