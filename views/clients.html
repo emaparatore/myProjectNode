@@ -21,12 +21,21 @@
                 <input class="form-control"
                        name="input1"
                        id="idfilterClient"
-                       ng-model="filterClient"
-                       required>
-                <button type="button" class="btn btn-default active">
-                    <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
-                </button>
+                       ng-model="filterClient">
+                <label for="idfilterClient">
+                    <button type="button" class="btn btn-default active">
+                        <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
+                    </button>
+                </label>
             </div>
+            <select ng-model="ordina" class="form-control" id="selectOrdinaClienti">
+                <option value=""></option>
+                <option value="companyName">Ragione sociale</option>
+                <option value="dayNotice">Giorni di preavviso</option>
+                <option value="averageRevenue">Fatturato Medio</option>
+                <option value="deliveryTime">Tempo di spedizione</option>
+            </select>
+            <label for="selectOrdinaClienti">Ordina</label>
         </form>
     </div>
 </div>
@@ -39,18 +48,18 @@
                 <tr>
                     <th></th>
                     <th>Ragione sociale</th>
-                    <th>Indirizzo</th>
+                    <!--<th>Indirizzo</th>
                     <th>Mail</th>
-                    <th>Telefono</th>
+                    <th>Telefono</th>-->
                     <th>Giorni Preavviso</th>
-                    <th>Modalità pagamento</th>
-                    <th>Modalità consegna</th>
+                    <!--<th>Modalità pagamento</th>
+                    <th>Modalità consegna</th>-->
                     <th>Fatturato medio</th>
                     <th>Tempo di consegna</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="client in clients | filter:filterClient">
+                <tr ng-repeat="client in clients | filter:filterClient | orderBy:ordina">
                     <td>
                         <!--Bottone modifica-->
                         <button ng-click="startUpdateClient(client)" type="button"
@@ -65,12 +74,12 @@
                         </button>
                     </td>
                     <td>{{client.companyName}}</td>
-                    <td>{{client.address}}</td>
-                    <td>{{client.mail}}</td>
-                    <td>{{client.telephone}}</td>
+                    <!--<td>{{client.address}}</td>
+        <td>{{client.mail}}</td>
+        <td>{{client.telephone}}</td>-->
                     <td>{{client.dayNotice}}</td>
-                    <td>{{client.paymentMethod}}</td>
-                    <td>{{client.deliveryMethod}}</td>
+                    <!--<td>{{client.paymentMethod}}</td>
+        <td>{{client.deliveryMethod}}</td>-->
                     <td>{{client.averageRevenue}}</td>
                     <td>{{client.deliveryTime}}</td>
                 </tr>
@@ -108,7 +117,7 @@
                                       ng-show="updateClientForm.input1.$valid"></span>
                             </div>
                             <!--Input indirizzo-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': updateClientForm.input2.$valid}">
                                 <label for="updateClientInput2">Indirizzo</label>
                                 <input class="form-control"
@@ -118,9 +127,9 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="updateClientForm.input2.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input mail-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': updateClientForm.input3.$valid}">
                                 <label for="updateClientInput3">E-mail</label>
                                 <input type="email"
@@ -131,9 +140,9 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="updateClientForm.input3.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input Telefono-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': updateClientForm.input4.$valid}">
                                 <label for="updateClientInput4">Telefono</label>
                                 <input class="form-control"
@@ -143,7 +152,7 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="updateClientForm.input4.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input giorni di preavviso-->
                             <div class="form-group"
                                  ng-class="{'has-success has-feedback': updateClientForm.input5.$valid}">
@@ -160,7 +169,7 @@
                                       ng-show="updateClientForm.input5.$valid"></span>
                             </div>
                             <!--Input modalita di pagamento-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': updateClientForm.input6.$valid}">
                                 <label for="updateClientInput6">Modalità di pagamento</label>
                                 <input class="form-control"
@@ -170,9 +179,9 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="updateClientForm.input6.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input modalita di consegna-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': updateClientForm.input7.$valid}">
                                 <label for="updateClientInput7">Modalità di consegna</label>
                                 <input class="form-control"
@@ -182,7 +191,7 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="updateClientForm.input7.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input fatturato medio-->
                             <div class="form-group"
                                  ng-class="{'has-success has-feedback': updateClientForm.input8.$valid}">
@@ -260,7 +269,7 @@
                                       ng-show="insertClientForm.input1.$valid"></span>
                             </div>
                             <!--Input indirizzo-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': insertClientForm.input2.$valid}">
                                 <label for="insertClientInput2">Indirizzo</label>
                                 <input class="form-control"
@@ -270,9 +279,9 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="insertClientForm.input2.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input mail-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': insertClientForm.input3.$valid}">
                                 <label for="insertClientInput3">E-mail</label>
                                 <input type="email"
@@ -283,9 +292,9 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="insertClientForm.input3.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input Telefono-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': insertClientForm.input4.$valid}">
                                 <label for="insertClientInput4">Telefono</label>
                                 <input class="form-control"
@@ -295,7 +304,7 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="insertClientForm.input4.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input giorni di preavviso-->
                             <div class="form-group"
                                  ng-class="{'has-success has-feedback': insertClientForm.input5.$valid}">
@@ -312,7 +321,7 @@
                                       ng-show="insertClientForm.input5.$valid"></span>
                             </div>
                             <!--Input modalita di pagamento-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': insertClientForm.input6.$valid}">
                                 <label for="insertClientInput6">Modalità di pagamento</label>
                                 <input class="form-control"
@@ -322,9 +331,9 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="insertClientForm.input6.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input modalita di consegna-->
-                            <div class="form-group"
+                            <!--<div class="form-group"
                                  ng-class="{'has-success has-feedback': insertClientForm.input7.$valid}">
                                 <label for="insertClientInput7">Modalità di consegna</label>
                                 <input class="form-control"
@@ -334,7 +343,7 @@
                                        required>
                                 <span class="glyphicon glyphicon-ok form-control-feedback"
                                       ng-show="insertClientForm.input7.$valid"></span>
-                            </div>
+                            </div>-->
                             <!--Input fatturato medio-->
                             <div class="form-group"
                                  ng-class="{'has-success has-feedback': insertClientForm.input8.$valid}">

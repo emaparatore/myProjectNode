@@ -24,7 +24,9 @@ router.post('/product/:id', function (req, res, next) {
 
 /* GET the list of products */
 router.get('/products', function (req, res, next) {
-    Product.find(function (err, data) {
+    Product.find()
+        .sort({ timeDeposit: 1, maxDailyProduction :1})
+        .exec(function (err, data) {
         if (err) { return next(err); }
 
         res.json(data);
@@ -39,6 +41,8 @@ router.put('/product', function (req, res, next) {
         res.json(data);
     });
 });
+
+
 
 
 /* DELETE a client by id */
@@ -59,7 +63,9 @@ router.post('/client/:id', function (req, res, next) {
 
 /* GET the list of clients */
 router.get('/clients', function (req, res, next) {
-    Client.find(function (err, data) {
+    Client.find()
+        .sort({dayNotice:1, averageRevenue:-1})
+        .exec(function (err, data) {
         if (err) { return next(err); }
         res.json(data);
     });

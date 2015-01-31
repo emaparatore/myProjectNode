@@ -1,0 +1,21 @@
+{
+	data : "data"
+	produzione : {
+			prodotto_id : "idProdotto"
+			nomeProdotto : "nomeProdotto"
+			quantitita : "quantita"
+			},
+	magazzinoProduzione:[
+				{
+				nomeProdotto : "nomeProdotto"
+				quantita : "quantita"
+				},
+				{...},
+				{...},
+				{...},
+				],
+	ordini :[
+			{nomeAzienda :
+			}
+			]
+}

@@ -25,14 +25,27 @@
                 <input class="form-control"
                        name="input1"
                        id="idfilterProduct"
-                       ng-model="filterProduct"
-                       required>
-                <button type="button" class="btn btn-default active">
-                    <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
-                </button>
+                       ng-model="filterProduct">
+                <label for="idfilterProduct">
+                    <button type="button" class="btn btn-default active">
+                        <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
+                    </button>
+                </label>
             </div>
+
+            <!--<input type="number" ng-model="a" />
+            <input type="number" ng-model="b" />
+            <input type="number" ng-model="c" />
+            <input type="number" ng-model="d" />-->
+            <select ng-model="ordina" class="form-control" id="selectOrdinaProdotti">
+                <option value="name">Nome</option>
+                <option value="timeDeposit">Tempo di deposito</option>
+                <option value="maxDailyProduction">Produzione massima giornaliera</option>
+            </select>
+            <label for="selectOrdinaProdotti">Ordina</label>
         </form>
     </div>
+    
 </div>
 
 <!--Tabella Prodotti-->
@@ -47,10 +60,11 @@
                     <th>Nome</th>
                     <th>Tempo di deposito</th>
                     <th>Produzione massima giornaliera</th>
+                    <!--<th>Indice</th>-->
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="product in products | filter:filterProduct">
+                <tr ng-repeat="product in products | filter:filterProduct |orderBy:ordina ">
                     <td>
                         <!--Bottone modifica-->
                         <button ng-click="startUpdateProduct(product)" type="button"
@@ -63,13 +77,18 @@
                                 data-toggle="tooltip" title="Cancella">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
+                        <!--{{calcola(product.timeDeposit,product.maxDailyProduction)}}-->
                     </td>
                     <td>{{product.name}}</td>
                     <td>{{product.timeDeposit}}</td>
-                    <td>{{product.maxDailyProduction}}</td>
+                    <td>{{product.maxDailyProduction}} </td>
+                    <!--<td>{{products.indexOf(product)}}</td>-->
                 </tr>
             </tbody>
         </table>
+        
+        
+
     </div>
 </div>
     <!--Modal Update-->

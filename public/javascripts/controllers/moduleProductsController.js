@@ -126,6 +126,21 @@ function ($scope, products) {
         
     };
 
+    //$scope.a = 0;
+    //$scope.b = 0;
+    //$scope.c = 0;
+    //$scope.d = 0;
+
+    //$scope.calcola = function (prodotto, sottrazione) {
+    //    var sommaPerDieci = 0;
+    //    for (i = 1; i <= prodotto; ++i)
+    //    {   
+    //        sommaPerDieci = sommaPerDieci + ($scope.a + $scope.b - $scope.c);
+    //    }
+    //    sommaPerDieci = sommaPerDieci - (sottrazione * $scope.d) ;
+    //    return sommaPerDieci;
+    //};
+
     //$('#successInsert').hide();
 
 }]);

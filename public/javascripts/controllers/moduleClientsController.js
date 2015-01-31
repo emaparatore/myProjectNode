@@ -12,14 +12,15 @@ function ($scope, clients) {
     
     //inizializazione dei campi del form
     $scope.companyName = '';
-    $scope.address = '';
-    $scope.mail = '';
-    $scope.telephone='';
-    $scope.dayNotice='';
-    $scope.paymentMethod='';
-    $scope.deliveryMethod='';
+    $scope.dayNotice = '';
     $scope.averageRevenue='';
     $scope.deliveryTime='';
+    //$scope.address = '';
+    //$scope.mail = '';
+    //$scope.telephone='';
+    //$scope.paymentMethod = '';
+    //$scope.deliveryMethod = '';
+
 
     //Funzione per settare il focus in modalità di creazione
     $('#insertClient').on('shown.bs.modal', function () {
@@ -47,14 +48,14 @@ function ($scope, clients) {
     $scope.beginInsertClient = function () {
         if (lastAction == 'modifica') {
             $scope.companyName = '';
-            $scope.address = '';
-            $scope.mail = '';
-            $scope.telephone='';
             $scope.dayNotice='';
-            $scope.paymentMethod='';
-            $scope.deliveryMethod='';
             $scope.averageRevenue='';
-            $scope.deliveryTime='';
+            $scope.deliveryTime = '';
+            //$scope.address = '';
+            //$scope.mail = '';
+            //$scope.telephone = '';
+            //$scope.paymentMethod = '';
+            //$scope.deliveryMethod = '';
         }
         lastAction = 'inserimento';
     };
@@ -65,14 +66,14 @@ function ($scope, clients) {
         $('#insertClient').modal('hide');
         clients.create({
             companyName : $scope.companyName,
-            address : $scope.address,
-            mail : $scope.mail,
-            telephone : $scope.telephone,
             dayNotice : $scope.dayNotice,
-            paymentMethod : $scope.paymentMethod,
-            deliveryMethod : $scope.deliveryMethod,
             averageRevenue : $scope.averageRevenue,
-            deliveryTime : $scope.deliveryTime,
+            deliveryTime: $scope.deliveryTime,
+            //address: $scope.address,
+            //mail: $scope.mail,
+            //telephone: $scope.telephone,
+            //paymentMethod: $scope.paymentMethod,
+            //deliveryMethod: $scope.deliveryMethod,
         }, function () {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
@@ -81,12 +82,12 @@ function ($scope, clients) {
             $scope.message.body = 'Cliente inserito';
             $scope.message.modalita = 'insert';
             $scope.companyName = '';
-            $scope.address = '';
-            $scope.mail = '';
-            $scope.telephone = '';
+            //$scope.address = '';
+            //$scope.mail = '';
+            //$scope.telephone = '';
             $scope.dayNotice = '';
-            $scope.paymentMethod = '';
-            $scope.deliveryMethod = '';
+            //$scope.paymentMethod = '';
+            //$scope.deliveryMethod = '';
             $scope.averageRevenue = '';
             $scope.deliveryTime = '';
             //$('#successInsert').show('slide', 'slow');
@@ -118,12 +119,12 @@ function ($scope, clients) {
     $scope.startUpdateClient = function (client) {
 
         $scope.companyName = client.companyName;
-        $scope.address = client.address;
-        $scope.mail = client.mail;
-        $scope.telephone = client.telephone;
+        //$scope.address = client.address;
+        //$scope.mail = client.mail;
+        //$scope.telephone = client.telephone;
         $scope.dayNotice = client.dayNotice;
-        $scope.paymentMethod = client.paymentMethod;
-        $scope.deliveryMethod = client.deliveryMethod;
+        //$scope.paymentMethod = client.paymentMethod;
+        //$scope.deliveryMethod = client.deliveryMethod;
         $scope.averageRevenue = client.averageRevenue;
         $scope.deliveryTime = client.deliveryTime;
 
@@ -137,12 +138,12 @@ function ($scope, clients) {
         $('#updateClient').modal('hide');
         var client = {};
         client.companyName = $scope.companyName;
-        client.address = $scope.address;
-        client.mail = $scope.mail;
-        client.telephone = $scope.telephone;
+        //client.address = $scope.address;
+        //client.mail = $scope.mail;
+        //client.telephone = $scope.telephone;
         client.dayNotice = $scope.dayNotice;
-        client.paymentMethod = $scope.paymentMethod;
-        client.deliveryMethod = $scope.deliveryMethod;
+        //client.paymentMethod = $scope.paymentMethod;
+        //client.deliveryMethod = $scope.deliveryMethod;
         client.averageRevenue = $scope.averageRevenue;
         client.deliveryTime = $scope.deliveryTime;
 
@@ -154,12 +155,12 @@ function ($scope, clients) {
             $scope.message.body = 'Cliente modificato';
             $scope.message.modalita = 'update';
             $scope.clients[indexUpdate].companyName = $scope.companyName;
-            $scope.clients[indexUpdate].address = $scope.address;
-            $scope.clients[indexUpdate].mail = $scope.mail;
-            $scope.clients[indexUpdate].telephone = $scope.telephone;
+            //$scope.clients[indexUpdate].address = $scope.address;
+            //$scope.clients[indexUpdate].mail = $scope.mail;
+            //$scope.clients[indexUpdate].telephone = $scope.telephone;
             $scope.clients[indexUpdate].dayNotice = $scope.dayNotice;
-            $scope.clients[indexUpdate].paymentMethod = $scope.paymentMethod;
-            $scope.clients[indexUpdate].deliveryMethod = $scope.deliveryMethod;
+            //$scope.clients[indexUpdate].paymentMethod = $scope.paymentMethod;
+            //$scope.clients[indexUpdate].deliveryMethod = $scope.deliveryMethod;
             $scope.clients[indexUpdate].averageRevenue = $scope.averageRevenue;
             $scope.clients[indexUpdate].deliveryTime = $scope.deliveryTime;
         });
