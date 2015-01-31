@@ -1,4 +1,4 @@
-﻿angular.module('produciFacile', ['ui.router', 'controllers', 'services'])
+﻿angular.module('produciFacile', ['ui.router', 'ui.bootstrap', 'controllers', 'services'])
 .config([
 '$stateProvider',
 '$urlRouterProvider',
@@ -31,6 +31,23 @@ function ($stateProvider, $urlRouterProvider) {
               clientPromise: ['clients', function (clients) {
                   return clients.getAll();
               }]
+          }
+      })
+      .state('produciFacile', {
+          url: '/produciFacile',
+          templateUrl: '/produciFacile.html',
+          controller: 'ProduciFacileController',
+          resolve: {
+              clientPromise: ['clients', function (clients,products) {
+                  return clients.getAll();
+              }],
+              productPromise: ['products', function (products) {
+                  return products.getAll();
+              }],
+              ordersPromise: ['orders', function (orders) {
+                  return orders.getAll();
+              }]
+              
           }
       });
 

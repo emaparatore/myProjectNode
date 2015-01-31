@@ -23,7 +23,11 @@
     <!--<script src="javascripts/bootstrap.min.js"></script>-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     
-    <!-- Ui - Router -->
+    <!-- Ui-Bootstrap -->
+    <script src="javascripts/ui-bootstrap.min.js"></script>
+    <script src="javascripts/ui-bootstrap-tpls.min.js"></script>
+
+    <!-- Ui-Router -->
     <script src="javascripts/ui-router.js"></script>
     <!--<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>-->
     
@@ -32,9 +36,10 @@
     <script src="javascripts/services.js"></script>
     <script src="javascripts/services/clientsService.js"></script>
     <script src="javascripts/services/productsService.js"></script>
+    <script src="javascripts/services/orderService.js"></script>
     <script src="javascripts/controllers/moduleClientsController.js"></script>
     <script src="javascripts/controllers/moduleProductsController.js"></script>
-
+    <script src="javascripts/controllers/moduleProduciFacileController.js"></script>
 </head>
 
 <body ng-app="produciFacile">
@@ -71,6 +76,7 @@
                             <li><a ui-sref="#">Magazzino</a></li>
                             <li><a ui-sref="#">Ordini</a></li>
                             <li><a ui-sref="#">Produzione</a></li>
+                            <li><a ui-sref="produciFacile">Produci-Facile</a></li>
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right"></ul>
