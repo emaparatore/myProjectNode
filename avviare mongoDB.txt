@@ -1,0 +1,5 @@
+Program Files\MongoDB 2.6 Standard\bin\mongo.exe --dbpath C:\Users\e.paratore\Documents\Studio\data
+
+
+
+C:\Program Files\MongoDB 2.6 Standard\bin>mongod.exe --dbpath C:\Users\e.paratore\Documents\Studio\data
