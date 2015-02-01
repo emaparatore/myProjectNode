@@ -8,18 +8,24 @@
 <!-- Ordini -->
 <div class="row">
     <div class="col-md-6">
-        <h2>Ordini</h2>
-
+        <h2>
+            Ordini
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#insertOrder" ng-click="beginInsertOrder()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true" tooltip="Aggiungi"></span>
+            </button>
+        </h2>
     </div>
 </div>
 
 
-<button type="button" class="btn btn-default" data-toggle="modal" data-target="#insertProduct" ng-click="beginInsertProduct()">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true" tooltip="Aggiungi"></span>
-</button>
+
 
 <!-- Modal Insert-->
-<div class="modal fade" id="insertProduct" tabindex="-1" role="dialog" aria-labelledby="insertProductLabel" aria-hidden="true">
+<!-- Data
+     Cliente
+     [Prodotto, Quantità]
+        -->
+<div class="modal fade" id="insertOrder" tabindex="-1" role="dialog" aria-labelledby="insertProductLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -82,7 +88,10 @@
                         <span class="glyphicon glyphicon-ok form-control-feedback"
                               ng-show="insertProductForm.input3.$valid"></span>
                     </div>                    
-                        <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+                        <datepicker ng-model="dt" 
+                                    min-date="minDate" 
+                                    show-weeks="false" 
+                                    class="well well-sm"></datepicker>
                     
 
                     <button ng-click="focusInsertProduct()"
@@ -101,13 +110,25 @@
 
 
 
-<h4>Popup</h4>
+<!--<h4>Popup</h4>
 <div class="row">
     <div class="col-md-6">
         <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+            <input type="text" 
+                   class="form-control" 
+                   datepicker-popup="{{format}}" 
+                   ng-model="dt" 
+                   is-open="opened" 
+                   min-date="minDate" 
+                   max-date="'2015-06-22'" 
+                   datepicker-options="dateOptions" 
+                   date-disabled="disabled(date, mode)" 
+                   ng-required="true" 
+                   close-text="Close" />
             <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                <button type="button" class="btn btn-default" ng-click="open($event)">
+                <i class="glyphicon glyphicon-calendar"></i>
+                </button>
             </span>
         </p>
     </div>
@@ -122,5 +143,5 @@
 <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
 <button type="button" class="btn btn-sm btn-default" ng-click="dt = '2009-08-24'">2009-08-24</button>
 <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-<button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" tooltip="After today restriction">Min date</button>
+<button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" tooltip="After today restriction">Min date</button>-->
 
