@@ -9,6 +9,17 @@ function ($scope, clients, products, orders) {
     $scope.products = products.products;
     $scope.orders = orders.orders;
 
+    $scope.order = {};
+    $scope.order.date = new Date();
+    $scope.order.client = {};
+    $scope.order.client._clientId = '';
+    $scope.order.client.companyName = '';
+    $scope.order.client.dayNotice = '';
+    $scope.order.client.averageRevenue = '';
+    $scope.order.client.deliveryTime = '';
+    
+
+    
     //$scope.today = function () {
     //    $scope.dt = new Date();
     //};
