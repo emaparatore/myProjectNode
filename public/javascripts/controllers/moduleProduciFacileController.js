@@ -9,6 +9,8 @@ function ($scope, clients, products, orders) {
     $scope.products = products.products;
     $scope.orders = orders.orders;
 
+    $scope.indexDelete = 0;
+
     $scope.message = {};
 
     //dichiarazione e inizializzazione degli oggetti client, product, detail, 
@@ -62,10 +64,38 @@ function ($scope, clients, products, orders) {
             $scope.message.body = 'Ordine inserito';
             $scope.message.modalita = 'insert';
             $scope.order = {};
+            $scope.order.date = new Date();
+            $scope.order.client = {};
+            $scope.order.details = [];
 
         });
     };
+
+    //funzione che produce la cancellazione del dettaglio ordine
+    $scope.deleteDetail = function (detail) {
+        $scope.order.details.splice($scope.order.details.indexOf(detail), 1);  
+    };
+
+    //funzione che prepara la cancellazione dell'ordine 
+    $scope.startDeleteOrder = function (order) {
+        $scope.indexDelete = $scope.orders.indexOf(order);
+        $("#deleteOrder").modal('show');
+    };
     
+    //funzione che produce la cancellazione dell'ordine
+    $scope.deleteOrder = function () {
+        orders.delete($scope.orders[$scope.indexDelete]._id, function () {
+            setTimeout(function () {
+                $('#modalSuccessMessage').modal('show');
+            }, 500);
+            $scope.message.title = 'Cancellazione';
+            $scope.message.body = 'Ordine rimosso';
+            $scope.message.modalita = 'delete';
+            $scope.orders.splice($scope.indexDelete, 1);
+        });
+
+    }
+
     //$scope.today = function () {
     //    $scope.dt = new Date();
     //};
