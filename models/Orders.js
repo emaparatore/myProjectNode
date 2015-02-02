@@ -9,7 +9,7 @@ var OrderSchema = new mongoose.Schema({
         averageRevenue: { type: Number, default: 0 },
         deliveryTime: { type: Number, default: 0 }
     },
-    orderDetails: [
+    details: [
         {
             _productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
             productName: String,
