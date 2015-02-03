@@ -1,15 +1,18 @@
 ﻿angular.module('moduleProduciFacileController', [])
 .controller('ProduciFacileController', [
 '$scope',
+'$filter',
 'clients',
 'products',
 'orders',
-function ($scope, clients, products, orders) {
+function ($scope, $filter, clients, products, orders) {
     $scope.clients = clients.clients;
     $scope.products = products.products;
     $scope.orders = orders.orders;
 
     $scope.indexDelete = 0;
+    $scope.modalita = "";
+    var lastAction = '';
 
     $scope.message = {};
 
@@ -28,9 +31,9 @@ function ($scope, clients, products, orders) {
     //dichiarazione e inizializzazione dell'oggetto order e orderDetail
     $scope.order = {};
     $scope.order.date = new Date();
+    $scope.order.date.setHours(10, 10, 10, 10)
     $scope.order.client = {};
     $scope.order.details = [];
-
 
     //associazione ordine - oggetti dello scope
     $scope.order.client._clientId = $scope.client._clientId;
@@ -38,6 +41,22 @@ function ($scope, clients, products, orders) {
     $scope.order.client.dayNotice = $scope.client.dayNotice;
     $scope.order.client.averageRevenue = $scope.client.averageRevenue;
     $scope.order.client.deliveryTime = $scope.client.deliveryTime;
+
+    //var setLastDay = function (giorno,mese,anno,deliveryTime) {
+    //    alert(giorno + '/' + mese + '/' + anno);
+    //    alert(deliveryTime);
+        
+    //    var date = new Date();
+    //    date.setDate(new Number(giorno));
+    //    date.setMonth(new Number(mese));
+    //    date.setFullYear(new Number(anno));
+    //    date = date.getTime() - (deliveryTime *( 1000 * 3600 * 24));
+
+    //    //var deliveryTimeNumber = new Number(deliveryTime);
+    //    //date.setDate(date.getDate() - deliveryTimeNumber);
+    //    alert (date);
+    //    return date;
+    //};
 
     
 
@@ -56,6 +75,17 @@ function ($scope, clients, products, orders) {
     //Funzione che produce l'inserimento dell'ordine
     $scope.addOrder = function () {
         $('#insertOrder').modal('hide');
+
+        //var date = new String( $filter('date')($scope.order.date, 'yyyy-MM-dd'));
+
+        //$scope.order.lastDay = setLastDay($scope.order.date.getDate(),
+        //                            $scope.order.date.getMonth(),
+        //                            $scope.order.date.getFullYear(),
+        //                            $scope.order.client.deliveryTime);
+        
+        $scope.order.lastDay = $scope.order.date.getTime() -
+            ($scope.order.client.deliveryTime * 1000 * 3600 * 24);
+
         orders.create($scope.order, function () {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
@@ -65,6 +95,7 @@ function ($scope, clients, products, orders) {
             $scope.message.modalita = 'insert';
             $scope.order = {};
             $scope.order.date = new Date();
+            $scope.order.date.setHours(10, 10, 10, 10)
             $scope.order.client = {};
             $scope.order.details = [];
 
@@ -96,6 +127,13 @@ function ($scope, clients, products, orders) {
 
     }
 
+    //$scope.dataScadenza = function (dataConsegna) {
+    //    var date = new Date(dataConsegna);
+    //    date.setDate(date.getDate() + 3);
+    //    return date;
+    //};
+
+    
     //$scope.today = function () {
     //    $scope.dt = new Date();
     //};

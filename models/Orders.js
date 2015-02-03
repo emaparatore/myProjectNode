@@ -1,13 +1,13 @@
 ﻿var mongoose = require('mongoose');
 
 var OrderSchema = new mongoose.Schema({
-    date : {type:Date},
+    date: { type: Date },
+    lastDay : {type: Date},
     client: {
         _clientId : {type : mongoose.Schema.Types.ObjectId, ref: 'Client'},
         companyName : String,
         dayNotice: { type: Number, default: 0 },
-        averageRevenue: { type: Number, default: 0 },
-        deliveryTime: { type: Number, default: 0 }
+        averageRevenue: { type: Number, default: 0 }
     },
     details: [
         {

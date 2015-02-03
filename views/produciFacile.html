@@ -28,7 +28,8 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Data</th>
+                    <th>Consegna</th>
+                    <th>Scandenza</th>
                     <th>Cliente</th>
                     <th>Dettaglio</th>
                 </tr>
@@ -49,6 +50,7 @@
                         </button>
                     </td>
                     <td>{{showOrder.date | date:'dd/MM/yyyy'}}</td>
+                    <td>{{showOrder.lastDay | date:'dd/MM/yyyy'}}</td>
                     <td>{{showOrder.client.companyName}}</td>
                     <td>
                         <table class="table table-striped table-condensed">
@@ -94,6 +96,7 @@
                             <!--Input data-->
                             <div class="form-group"
                                  ng-class="{'has-success has-feedback': insertOrderForm.input1.$valid}">
+                                <!--{{order.date | date:'dd/MM/yyyy'}}-->
                                 <label for="orderInput1">Data</label>
                                 <input class="form-control"
                                        name="input1"
