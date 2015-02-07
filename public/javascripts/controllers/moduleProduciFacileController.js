@@ -18,6 +18,8 @@ function ($scope, $filter, clients, products, orders,productions) {
     var lastAction = '';
 
     $scope.message = {};
+    $scope.update = {};
+
 
     //dichiarazione e inizializzazione dell'oggetto detail, 
     $scope.detail = {};
@@ -289,7 +291,27 @@ function ($scope, $filter, clients, products, orders,productions) {
         return livello;
     }
 
-    
+    // funzione che prepara la modifica della data dell'ordine
+    $scope.beginUpdateOrderDate = function (order) {
+        $('#updateDate').modal('show');
+        $scope.order = angular.copy(order);
+        $scope.update.date = $scope.order.date;
+        $scope.indexUpdate = $scope.orders.indexOf(order);
+    }
 
+    // funzione che modifica la data dell'ordine
+    $scope.updateDateOrder = function () {
+        $('#updateDate').modal('hide');
+        $scope.order.date = $scope.update.date;
+        orders.update($scope.orders[$scope.indexUpdate]._id, $scope.order, $scope.indexUpdate, function () {
+            setTimeout(function () {
+                $('#modalSuccessMessage').modal('show');
+            }, 500);
+            $scope.message.title = 'Modifica';
+            $scope.message.body = 'Ordine modificato';
+            $scope.message.modalita = 'update';
+
+        });
+    }
 
 }]);
