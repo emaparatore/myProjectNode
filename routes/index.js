@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 var Client = mongoose.model('Client');
 var Order = mongoose.model('Order');
+var Production = mongoose.model('Production');
 
 /* DELETE a product by id */
 router.delete('/product/:id', function (req, res, next) {
@@ -40,7 +41,6 @@ router.put('/product', function (req, res, next) {
         res.json(data);
     });
 });
-
 
 
 
@@ -111,6 +111,39 @@ router.put('/order', function (req, res, next) {
     });
 });
 
+/* DELETE a production by id */
+router.delete('/production/:id', function (req, res, next) {
+    Production.findByIdAndRemove(req.params.id, req.body, function (err, data) {
+        if (err) return next(err);
+        res.json(data);
+    });
+});
+
+/* POST a production by id */
+router.post('/production/:id', function (req, res, next) {
+    Production.findByIdAndUpdate(req.params.id, req.body, function (err, data) {
+        if (err) return next(err);
+        res.json(data);
+    });
+});
+
+/* GET the list of productions */
+router.get('/productions', function (req, res, next) {
+    Production.find(function (err, data) {
+        if (err) { return next(err); }
+
+        res.json(data);
+    });
+});
+
+/* PUT a new production in the database */
+router.put('/production', function (req, res, next) {
+    var production = new Production(req.body);
+    production.save(function (err, data) {
+        if (err) { return next(err); }
+        res.json(data);
+    });
+});
 
 
 

@@ -1,2 +1,2 @@
-﻿angular.module('services', ['clientsService','productsService','orderService'])
+﻿angular.module('services', ['clientsService','productsService','orderService','productionService'])
 

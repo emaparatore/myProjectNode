@@ -24,8 +24,9 @@
         });
     };
 
-    o.update = function (id, order, callback) {
+    o.update = function (id, order, index, callback) {
         return $http.post('/order/' + id, order).success(function (data) {
+            o.orders[index] = angular.copy(data);
             callback();
         });
     };

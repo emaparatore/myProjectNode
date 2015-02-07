@@ -40,9 +40,9 @@ function ($scope, clients) {
     //});
 
     //Funzione per settare il focus al momento dell'inserimento e della modifica
-    $scope.focusInsertClient = function () {
-        $('#clientInput1').focus();
-    }
+    //$scope.focusInsertClient = function () {
+    //    $('#clientInput1').focus();
+    //}
 
     //Funzione per azzerare il contenuto del modal in inserimento
     $scope.beginInsertClient = function () {

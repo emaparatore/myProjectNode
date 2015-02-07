@@ -46,6 +46,9 @@ function ($stateProvider, $urlRouterProvider) {
               }],
               ordersPromise: ['orders', function (orders) {
                   return orders.getAll();
+              }],
+              productionsPromise: ['productions', function (productions) {
+                  return productions.getAll();
               }]
               
           }

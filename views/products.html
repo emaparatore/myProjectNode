@@ -157,15 +157,19 @@
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="updateProductForm.input3.$valid"></span>
                         </div>
-                        <button type="submit"
-                                class="btn btn-default">
-                            Modifica
-                        </button>
+                        <div class="text-center">
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    tooltip="Salva" tooltip-placement="right">
+                                Salva &nbsp;
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                            </button>
+                        </div>
                     </form>
                 </div>
-                <div class="modal-footer">
+                <!--<div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
@@ -185,7 +189,7 @@
                     </button>
                     <h4 class="modal-title"
                         id="insertProductLabel">
-                        Inserisci un nuovo prodotto
+                        Nuovo prodotto
                     </h4>
                 </div>
                 <div class="modal-body">
@@ -236,16 +240,20 @@
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="insertProductForm.input3.$valid"></span>
                         </div>
-                        <button ng-click="focusInsertProduct()"
-                                type="submit"
-                                class="btn btn-default">
-                            Crea
-                        </button>
-                    </form>
+                        <div class="text-center">
+                            <button ng-click="focusInsertProduct()"
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    tooltip="Salva" tooltip-placement="right">
+                                Salva &nbsp;
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                            </button>
+                            </div>
+                </form>
                 </div>
-                <div class="modal-footer">
+                <!--<div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

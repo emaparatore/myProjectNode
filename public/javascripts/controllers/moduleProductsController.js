@@ -32,9 +32,9 @@ function ($scope, products) {
     //});
 
     //Funzione per settare il focus al momento dell'inserimento e della modifica
-    $scope.focusInsertProduct = function () {
-        $('#productInput1').focus();
-    }
+    //$scope.focusInsertProduct = function () {
+    //    $('#productInput1').focus();
+    //}
 
     //Funzione per azzerare il contenuto del modal in inserimento
     $scope.beginInsertProduct = function () {
