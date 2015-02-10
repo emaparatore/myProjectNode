@@ -62,7 +62,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="client in clients | filter:filterClient | orderBy:ordina">
-                    <td>
+                    <td class="text-center">
                         <!--Bottone modifica-->
                         <button ng-click="startUpdateClient(client)" type="button"
                                 class="btn btn-default" data-toggle="modal" data-target="#updateClient"

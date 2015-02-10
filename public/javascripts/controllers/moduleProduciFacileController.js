@@ -12,13 +12,15 @@ function ($scope, $filter, clients, products, orders,productions) {
     $scope.orders = orders.orders;
     $scope.productions = productions.productions;
 
-    $scope.indexDelete = 0;
-    $scope.indexUpdate = 0;
+    $scope.indexDelete = -1;
+    $scope.indexUpdate = -1;
     $scope.modalita = "";
     var lastAction = '';
 
     $scope.message = {};
-    $scope.update = {};
+    $scope.indexSelectedDetail = -1;
+
+    $scope.deltaQuantity = null;
 
 
     //dichiarazione e inizializzazione dell'oggetto detail, 
@@ -76,6 +78,12 @@ function ($scope, $filter, clients, products, orders,productions) {
         }
     };
 
+    //funzione che verifica che un cliente sia stato selezionato durante l'inserimento
+    //non utilizzata
+    $scope.clientSelected = function () {
+        return (!($.isEmptyObject($scope.order.client)));
+    }
+
     var trovaCliente = function(idCliente){
         for (i = 0 ; i <= $scope.clients.length ; ++i) {
             if ($scope.clients[i]._id == idCliente)
@@ -113,7 +121,7 @@ function ($scope, $filter, clients, products, orders,productions) {
         $('#orderDetailsInput1').focus();
     };
 
-    //funzione che produce la cancellazione del dettaglio ordine
+    //funzione che produce la cancellazione temporanea del dettaglio ordine
     $scope.deleteDetail = function (detail) {
         $scope.order.details.splice($scope.order.details.indexOf(detail), 1);
     };
@@ -121,41 +129,33 @@ function ($scope, $filter, clients, products, orders,productions) {
     //Funzione che produce l'inserimento dell'ordine
     var addOrder = function () {
 
-        //var date = new String( $filter('date')($scope.order.date, 'yyyy-MM-dd'));
+        if (!($.isEmptyObject($scope.order.client))) {
 
-        //$scope.order.lastDay = setLastDay($scope.order.date.getDate(),
-        //                            $scope.order.date.getMonth(),
-        //                            $scope.order.date.getFullYear(),
-        //                            $scope.order.client.deliveryTime);
-        
-        //$scope.order.client.clientId = $scope.selectClient.client._id;
-        //$scope.order.client.companyName = $scope.selectClient.client.companyName;
-        //$scope.order.client.dayNotice = $scope.selectClient.client.dayNotice;
-        //$scope.order.client.averageRevenue = $scope.selectClient.client.averageRevenue;
-        
-        $scope.order.lastDay = $scope.order.date.getTime() -
-            ($scope.order.client.deliveryTime * 1000 * 3600 * 24);
-        $('#insertUpdateOrder').modal('hide');
-        orders.create($scope.order, function () {
-            setTimeout(function () {
-                $('#modalSuccessMessage').modal('show');
-            }, 500);
-            $scope.message.title = 'Inserimento';
-            $scope.message.body = 'Ordine inserito';
-            $scope.message.modalita = 'insert';
-            $scope.order = {};
-            $scope.order.date = new Date();
-            $scope.order.date.setHours(10, 10, 10, 10);
-            $scope.order.client = {};
-            $scope.order.details = [];
+            $scope.order.lastDay = $scope.order.date.getTime() -
+                ($scope.order.client.deliveryTime * 1000 * 3600 * 24);
+            $('#insertUpdateOrder').modal('hide');
+            orders.create($scope.order, function () {
+                setTimeout(function () {
+                    $('#modalSuccessMessage').modal('show');
+                }, 500);
+                $scope.message.title = 'Inserimento';
+                $scope.message.body = 'Ordine inserito';
+                $scope.message.modalita = 'insert';
+                $scope.order = {};
+                $scope.order.date = new Date();
+                $scope.order.date.setHours(10, 10, 10, 10);
+                $scope.order.client = {};
+                $scope.order.details = [];
 
-        });
+            });
+        }
     };
 
     //funzione che produce l'update dell'ordine
     var updateOrder = function () {
         $('#insertUpdateOrder').modal('hide');
-
+        $scope.order.lastDay = $scope.order.date.getTime() -
+            ($scope.order.client.deliveryTime * 1000 * 3600 * 24);
         orders.update($scope.orders[$scope.indexUpdate]._id, $scope.order, $scope.indexUpdate, function () {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
@@ -292,17 +292,19 @@ function ($scope, $filter, clients, products, orders,productions) {
     }
 
     // funzione che prepara la modifica della data dell'ordine
-    $scope.beginUpdateOrderDate = function (order) {
-        $('#updateDate').modal('show');
+    $scope.beginUpdateOrderDate = function (order) {       
         $scope.order = angular.copy(order);
-        $scope.update.date = $scope.order.date;
+        $scope.order.client = trovaCliente(order.client._id);
         $scope.indexUpdate = $scope.orders.indexOf(order);
+        lastAction = 'update';
+        $('#updateDate').modal('show');
     }
 
     // funzione che modifica la data dell'ordine
     $scope.updateDateOrder = function () {
         $('#updateDate').modal('hide');
-        $scope.order.date = $scope.update.date;
+        $scope.order.lastDay = $scope.order.date.getTime() -
+            ($scope.order.client.deliveryTime * 1000 * 3600 * 24);
         orders.update($scope.orders[$scope.indexUpdate]._id, $scope.order, $scope.indexUpdate, function () {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
@@ -310,8 +312,62 @@ function ($scope, $filter, clients, products, orders,productions) {
             $scope.message.title = 'Modifica';
             $scope.message.body = 'Ordine modificato';
             $scope.message.modalita = 'update';
+        });
+    }
+
+    //funzione che prepara la cancellazione di un dettaglio ordine
+    $scope.startDeleteOrderDetail = function (order, detail) {
+        lastAction = 'update';
+        $scope.indexUpdate = $scope.orders.indexOf(order);
+        $scope.indexSelectedDetail = order.details.indexOf(detail);
+        $scope.order = angular.copy(order);
+        $('#deleteOrderDetail').modal('show');
+    }
+
+    //funzione che produce la cancellazione di un dettaglio ordine
+    $scope.deleteOrderDetail = function () {
+        $scope.order.details.splice($scope.indexSelectedDetail, 1);
+        orders.update($scope.orders[$scope.indexUpdate]._id, $scope.order, $scope.indexUpdate, function () {
+            setTimeout(function () {
+                $('#modalSuccessMessage').modal('show');
+            }, 500);
+            $scope.message.title = 'Cancellazione';
+            $scope.message.body = 'Dettaglio rimosso';
+            $scope.message.modalita = 'delete';
 
         });
     }
 
+    //funzione che prepara la modifica di un dettaglio ordine
+    $scope.beginUpdateOrderDetail = function (order,detail) {
+        lastAction = 'update';
+        $scope.indexUpdate = $scope.orders.indexOf(order);
+        $scope.indexSelectedDetail = order.details.indexOf(detail);
+        $scope.order = angular.copy(order);
+        $scope.deltaQuantity = null;
+        $('#updateOrderDetail').modal('show');
+    }
+
+    //funzione che setta il focus in modalità modifica dettaglio ordine
+    $('#updateOrderDetail').on('shown.bs.modal', function () {
+        $('#updateOrderDetailFormInput1').focus();
+    });
+
+    //funzione che produce la modifica di un dettaglio ordine
+    $scope.updateOrderDetail = function () {
+        $('#updateOrderDetail').modal('hide');
+        $scope.order.details[$scope.indexSelectedDetail].quantity =
+            $scope.order.details[$scope.indexSelectedDetail].quantity +
+            $scope.deltaQuantity;
+        orders.update($scope.orders[$scope.indexUpdate]._id, $scope.order, $scope.indexUpdate, function () {
+            setTimeout(function () {
+                $('#modalSuccessMessage').modal('show');
+            }, 500);
+            $scope.message.title = 'Modifica';
+            $scope.message.body = 'Dettaglio modificato';
+            $scope.message.modalita = 'update';
+
+        });
+    }
+    
 }]);
