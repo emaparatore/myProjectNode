@@ -7,13 +7,16 @@ var OrderSchema = new mongoose.Schema({
         _id : {type : mongoose.Schema.Types.ObjectId, ref: 'Client'},
         companyName : String,
         dayNotice: { type: Number, default: 0 },
-        averageRevenue: { type: Number, default: 0 }
+        averageRevenue: { type: Number, default: 0 },
+        deliveryTime: { type: Number, default: 0 }
     },
     details: [
         {
-            productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-            productName: String,
-            timeDeposit: { type: Number, default: 1 },
+            product: {
+                productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+                name: String,
+                timeDeposit: { type: Number, default: 1 }
+            },
             quantity: { type: Number }
         }
     ]

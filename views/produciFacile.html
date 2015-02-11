@@ -103,7 +103,7 @@
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                     </button>
                                 </td>
-                                <td>{{showSavedDetail.productName}}</td>
+                                <td>{{showSavedDetail.product.name}}</td>
                                 <td class="text-right">
                                     <button class="btn btn-default btn-sm" ng-click="beginUpdateOrderDetail(showOrder,showSavedDetail)">
                                         {{showSavedDetail.quantity}}
@@ -269,6 +269,10 @@
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="insertOrderDetailsForm.inputDetails2.$valid"></span>
                         </div>
+                        <div class="alert alert-info alert-dismissible" role="alert" ng-show="alertOrderDetail">
+                            <button type="button" class="close" ng-click="hideAlertOrderDetail()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            Prodotto già presente
+                        </div>
                         <button type="submit"
                                 class="btn btn-primary"
                                 tooltip="Aggiungi"
@@ -293,7 +297,7 @@
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                     </button>
                                 </td>
-                                <td>{{showDetail.productName}}</td>
+                                <td>{{showDetail.product.name}}</td>
                                 <td>{{showDetail.quantity}}</td>
                             </tr>
                         </tbody>
@@ -358,7 +362,7 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-warning" role="alert">
-                    Cancellare il dettaglio ordine di {{order.details[indexSelectedDetail].quantity}} colli di {{order.details[indexSelectedDetail].productName}}? 
+                    Cancellare il dettaglio ordine di {{orders[indexUpdate].details[indexSelectedDetail].quantity}} colli di {{orders[indexUpdate].details[indexSelectedDetail].product.name}}? 
                 </div>
             </div>
             <div class="modal-footer">
@@ -512,7 +516,7 @@
             </div>
             <div class="modal-body">
                 <div style="display:inline-block; min-height:290px;">
-                    <datepicker ng-model="order.date"
+                    <datepicker ng-model="date"
                                 min-date="minDate"
                                 show-weeks="false"
                                 class="well well-sm"></datepicker>
@@ -559,8 +563,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{order.details[indexSelectedDetail].productName}}</td>
-                            <td>{{order.details[indexSelectedDetail].quantity + deltaQuantity}}</td>
+                            <td>{{orders[indexUpdate].details[indexSelectedDetail].product.name}}</td>
+                            <td>{{orders[indexUpdate].details[indexSelectedDetail].quantity + deltaQuantity}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -576,7 +580,8 @@
                                id="updateOrderDetailFormInput1"
                                ng-model="deltaQuantity"
                                type="number"
-                               required>
+                               required
+                               min="{{-orders[indexUpdate].details[indexSelectedDetail].quantity}}">
                         <span class="glyphicon glyphicon-ok form-control-feedback"
                               ng-show="updateOrderDetailForm.input1.$valid"></span>
                     </div>
@@ -584,8 +589,7 @@
                         <button type="submit"
                                 class="btn btn-primary"
                                 tooltip="Salva"
-                                tooltip-placement="right"
-                                ng-click="updateOrderDetail()">
+                                tooltip-placement="right">
                             Salva &nbsp;
                             <span class="glyphicon glyphicon-floppy-disk lg" aria-hidden="true"></span>
                         </button>
