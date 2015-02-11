@@ -50,6 +50,7 @@
     </div>
 
 </div>
+
 <!-- Tabella ordini -->
     <div class="row"> 
         <div class="col-md-7">
@@ -58,6 +59,7 @@
             <thead>
                 <tr>
                     <th></th>
+                    <th></th>
                     <th>Consegna</th>
                     <th>Scandenza</th>
                     <th>Cliente</th>
@@ -65,7 +67,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="showOrder in orders | orderBy:['lastDay', 'client.dayNotice', 'client.averageRevenue'] | filter:filterProduciFacile">
+                <tr ng-repeat="showOrder in orders | filter:filterProduciFacile">
+                    <td>{{orders.indexOf(showOrder)}}</td>
                     <td class="text-center">
                         <!--Bottone modifica-->
                         <!--<button ng-click="startUpdateOrder(showOrder)" type="button"
@@ -126,13 +129,15 @@
                     <thead>
                         <tr>
                             <th></th>
+                            <th></th>
                             <th>Data</th>
                             <th>Prodotto</th>
                             <th>Quantità</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="showProduction in productions | orderBy:'date' | filter:filterProduciFacile">
+                        <tr ng-repeat="showProduction in productions | filter:filterProduciFacile">
+                            <td>{{productions.indexOf(showProduction)}}</td>
                             <td class="text-center">
                                 <!--Bottone modifica-->
                                 <!--<button ng-click="startUpdateProduction(showProduction)" type="button"
@@ -161,7 +166,7 @@
 </div>
 
 
-<!-- Modal Insert/Update-->
+<!-- Modal Insert Order-->
 <div class="modal fade" id="insertUpdateOrder" tabindex="-1" role="dialog" 
      aria-labelledby="insertUpdateOrderLabel" 
      aria-hidden="true">

@@ -1,19 +1,25 @@
 ﻿angular.module('productionService', [])
-.factory('productions', ['$http', function ($http) {
+.factory('productions', ['$http','$filter', function ($http, $filter) {
     var o = {
         productions: []
     };
 
+    var orderBy = $filter('orderBy');
+    var orderProductions = function (array) {
+        return orderBy(array, 'date');
+    }
+
     o.getAll = function () {
         return $http.get('/productions').success(
             function (data) {
-                angular.copy(data, o.productions);
+                angular.copy(orderProductions(data), o.productions);
             });
     };
 
     o.create = function (production, callback) {
         return $http.put('/production', production).success(function (data) {
             o.productions.push(data);
+            angular.copy(orderProductions(o.productions), o.productions);
             callback();
         });
     };
@@ -26,7 +32,8 @@
 
     o.update = function (id, production, index, callback) {
         return $http.post('/production/' + id, production).success(function (data) {
-            o.productions[index] = angular.copy(data);
+            angular.copy(data, o.productions[index]);
+            angular.copy(orderProductions(o.productions), o.productions);
             callback();
         });
     };

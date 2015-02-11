@@ -10,6 +10,7 @@ function ($scope, $filter, clients, products, orders, productions) {
     $scope.clients = clients.clients;
     $scope.products = products.products;
     $scope.orders = orders.orders;
+    
     $scope.productions = productions.productions;
 
     $scope.indexDelete = -1;
@@ -203,14 +204,16 @@ function ($scope, $filter, clients, products, orders, productions) {
     
     //funzione che produce la cancellazione dell'ordine
     $scope.deleteOrder = function () {
-        orders.delete($scope.orders[$scope.indexDelete]._id, function () {
+        orders.delete($scope.orders[$scope.indexDelete]._id,
+            $scope.indexDelete,
+            function () {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
             $scope.message.title = 'Cancellazione';
             $scope.message.body = 'Ordine rimosso';
             $scope.message.modalita = 'delete';
-            $scope.orders.splice($scope.indexDelete, 1);
+            
         });
 
     }
@@ -443,10 +446,6 @@ function ($scope, $filter, clients, products, orders, productions) {
         $('#updateQuantityProductionFormInput1').focus();
     });
 
-  
-
-    
-
     //funzione che prepara la modifica di una produzione (quantità)
     $scope.beginUpdateProductionQuantity = function (production) {
         $scope.indexUpdate = $scope.productions.indexOf(production);
@@ -470,4 +469,8 @@ function ($scope, $filter, clients, products, orders, productions) {
                 $scope.message.modalita = 'update';
             });
     }
+
+    
+    
+
 }]);
