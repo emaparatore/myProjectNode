@@ -31,5 +31,14 @@
         });
     };
 
+    o.updateQuantity = function (id, index, quantity, callback) { 
+        var productionCopy = angular.copy(o.productions[index]);
+        productionCopy.quantity += quantity;
+        return $http.post('/production/' + id, productionCopy).success(function (data) {
+            o.productions[index] = angular.copy(data);
+            callback();
+        });
+    }
+
     return o;
 }])

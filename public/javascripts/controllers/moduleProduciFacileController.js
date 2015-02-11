@@ -6,7 +6,7 @@
 'products',
 'orders',
 'productions',
-function ($scope, $filter, clients, products, orders,productions) {
+function ($scope, $filter, clients, products, orders, productions) {
     $scope.clients = clients.clients;
     $scope.products = products.products;
     $scope.orders = orders.orders;
@@ -26,6 +26,7 @@ function ($scope, $filter, clients, products, orders,productions) {
     $scope.indexDuplicateDetail = -1;
 
     $scope.deltaQuantity = null;
+    $scope.productionDeltaQuantity = null;
 
 
     //dichiarazione e inizializzazione dell'oggetto detail, 
@@ -118,6 +119,12 @@ function ($scope, $filter, clients, products, orders,productions) {
         else if($scope.modalita =='update')
             updateOrder();
     };
+
+    //funzione che controlla se un prodotto è già presente nei dettagli
+    //TO DO
+    var checkDetail = function () {
+
+    }
 
     //funzione che produce l'inserimento temporaneo del dettaglio ordine
     $scope.addDetailOrder = function () {
@@ -301,6 +308,45 @@ function ($scope, $filter, clients, products, orders,productions) {
         });
     }
 
+    //funzione che prepara la creazione di un dettaglio ordine
+    $scope.beginAddOrderDetail = function (order) {
+        $('#insertDetailOrder').modal('show');
+        $scope.indexUpdate = $scope.orders.indexOf(order);
+        $scope.details = angular.copy(order.details);
+    }
+
+    //funzione che produce l'inserimento permanente di un nuovo dettaglio ordine
+    $scope.addNewDetailOrder = function () {
+        var productDuplicate = false;
+        for (i = 0; i < $scope.details.length; ++i) {
+            if ($scope.details[i].product.name == $scope.detail.product.name) {
+                productDuplicate = true;
+                $scope.indexDuplicateDetail = i;
+                $scope.alertOrderDetail = true;
+                break;
+            }
+        }
+        if (!productDuplicate) {
+            //$scope.order.details.push($scope.detail);
+            $('#insertDetailOrder').modal('hide');
+            orders.updateInsertDetail($scope.orders[$scope.indexUpdate]._id,
+                $scope.orders[$scope.indexUpdate],
+                $scope.detail,
+                $scope.indexUpdate,
+                function () {
+                    setTimeout(function () {
+                        $('#modalSuccessMessage').modal('show');
+                    }, 500);
+                    $scope.message.title = 'Modifica';
+                    $scope.message.body = 'Dettaglio inserito';
+                    $scope.message.modalita = 'update';
+                    $scope.detail = {};
+                });
+           
+        }
+        $('#orderDetailsInput1').focus();
+    }
+
     //funzione che prepara la creazione della produzione
     $scope.startInsertProduction = function () {
         $('#insertUpdateProduction').modal('show');
@@ -391,19 +437,37 @@ function ($scope, $filter, clients, products, orders,productions) {
         });
 
     }
-
-    //funzione che calcola il livello
-    $scope.calcolaLivello = function (order) {
-        var livello = new Number();
-        var index = $scope.orders.indexOf(order);
-        for (i = 0; i < $scope.orders.length ; ++i){
-            if (i != index) {
-                if($scope.orders[i].lastDay < order.lastDay ){}
-            }
-        }
-            
-        
-        return livello;
-    }
     
+    //funzione che setta il focus  in modalità modifica quantità produzione 
+    $('#updateQuantityProduction').on('shown.bs.modal', function () {
+        $('#updateQuantityProductionFormInput1').focus();
+    });
+
+  
+
+    
+
+    //funzione che prepara la modifica di una produzione (quantità)
+    $scope.beginUpdateProductionQuantity = function (production) {
+        $scope.indexUpdate = $scope.productions.indexOf(production);
+        $scope.productionDeltaQuantity = null;
+        $('#updateQuantityProduction').modal('show');
+    }
+
+    //funzione che produce la modifica di una produzione (quantità)
+    $scope.updateProductionQuantity = function () {
+        $('#updateQuantityProduction').modal('hide');
+        productions.updateQuantity(
+            $scope.productions[$scope.indexUpdate]._id,
+            $scope.indexUpdate,
+            $scope.productionDeltaQuantity,
+            function () {
+                setTimeout(function () {
+                    $('#modalSuccessMessage').modal('show');
+                }, 500);
+                $scope.message.title = 'Modifica';
+                $scope.message.body = 'Produzione modificata';
+                $scope.message.modalita = 'update';
+            });
+    }
 }]);

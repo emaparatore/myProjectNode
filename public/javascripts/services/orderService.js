@@ -60,5 +60,13 @@
         });
     }
 
+    o.updateInsertDetail = function (id, order, detail, index, callback) {
+        order.details.push(detail);
+        return $http.post('/order/' + id, order).success(function (data) {
+            o.orders[index] = angular.copy(data);
+            callback();
+        });
+    }
+
     return o;
 }])
