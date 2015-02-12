@@ -123,9 +123,9 @@ function ($scope, $filter, clients, products, orders, productions) {
 
     //funzione che controlla se un prodotto è già presente nei dettagli
     //TO DO
-    var checkDetail = function () {
+    //var checkDetail = function () {
 
-    }
+    //}
 
     //funzione che produce l'inserimento temporaneo del dettaglio ordine
     $scope.addDetailOrder = function () {
@@ -168,6 +168,7 @@ function ($scope, $filter, clients, products, orders, productions) {
                 setTimeout(function () {
                     $('#modalSuccessMessage').modal('show');
                 }, 500);
+                produciFacile();
                 $scope.message.title = 'Inserimento';
                 $scope.message.body = 'Ordine inserito';
                 $scope.message.modalita = 'insert';
@@ -210,6 +211,7 @@ function ($scope, $filter, clients, products, orders, productions) {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
+            produciFacile();
             $scope.message.title = 'Cancellazione';
             $scope.message.body = 'Ordine rimosso';
             $scope.message.modalita = 'delete';
@@ -241,6 +243,7 @@ function ($scope, $filter, clients, products, orders, productions) {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
+            produciFacile();
             $scope.message.title = 'Modifica';
             $scope.message.body = 'Ordine modificato';
             $scope.message.modalita = 'update';
@@ -270,6 +273,7 @@ function ($scope, $filter, clients, products, orders, productions) {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
+            produciFacile();
             $scope.message.title = 'Cancellazione';
             $scope.message.body = 'Dettaglio rimosso';
             $scope.message.modalita = 'delete';
@@ -304,6 +308,7 @@ function ($scope, $filter, clients, products, orders, productions) {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
+            produciFacile();
             $scope.message.title = 'Modifica';
             $scope.message.body = 'Dettaglio modificato';
             $scope.message.modalita = 'update';
@@ -340,6 +345,7 @@ function ($scope, $filter, clients, products, orders, productions) {
                     setTimeout(function () {
                         $('#modalSuccessMessage').modal('show');
                     }, 500);
+                    produciFacile();
                     $scope.message.title = 'Modifica';
                     $scope.message.body = 'Dettaglio inserito';
                     $scope.message.modalita = 'update';
@@ -397,6 +403,7 @@ function ($scope, $filter, clients, products, orders, productions) {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
+            produciFacile();
             $scope.message.title = 'Inserimento';
             $scope.message.body = 'Produzione inserita';
             $scope.message.modalita = 'insert';
@@ -433,6 +440,7 @@ function ($scope, $filter, clients, products, orders, productions) {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
+            produciFacile();
             $scope.message.title = 'Cancellazione';
             $scope.message.body = 'Produzione rimossa';
             $scope.message.modalita = 'delete';
@@ -464,6 +472,7 @@ function ($scope, $filter, clients, products, orders, productions) {
                 setTimeout(function () {
                     $('#modalSuccessMessage').modal('show');
                 }, 500);
+                produciFacile();
                 $scope.message.title = 'Modifica';
                 $scope.message.body = 'Produzione modificata';
                 $scope.message.modalita = 'update';
@@ -473,42 +482,84 @@ function ($scope, $filter, clients, products, orders, productions) {
     //funzione che calcola le quantità dei prodotti disponibili in produzione
     // e la quantità di prodotto soddisfatta degli ordini
     var produciFacile = function () {
+        var orders = [];
+        //orders[0] = {};
+        //orders[0].date = new Date();
+        //orders[0].lastDay = new Date();
+        //orders[0].client = {};
+        //orders[0].client.dayNotice = 0;
+        //orders[0].details = [];
 
-        angular.forEach($scope.orders, function (order, key) {
+
+        angular.copy($scope.orders, orders);
+
+        var productions = [];
+        //productions[0] = {};
+        //productions[0].date = new Date();
+
+        angular.copy($scope.productions, productions);
+
+        angular.forEach(orders, function (order, key) {
             angular.forEach(order.details, function(detail,key){
                 detail.satisfiedQuantity = 0;
             });
             
         });
-        angular.forEach($scope.productions, function (production, key) {
+        angular.forEach(productions, function (production, key) {
             production.leftQuantity = production.quantity;
         });
 
-        for (i = 0; i < $scope.orders.length; ++i) {
-            var order = $scope.orders[i];
-            var details = order.details;
-            for (k = 0; k < details.length; ++k) {
-                var detail = details[k];
-                for (j = 0; j < $scope.productions.length ; ++j) {
-                    if (
-                        //    (($scope.productions[j].date.getTime() +
-                        //(detail.timeDeposit * 1000 * 3600 * 24))
-                        //<= order.lastDay.getTime()) &&
-                    detail.satisfiedQuantity >= detail.quantity)
-                        break;
-                    if (detail.product.name == $scope.productions[j].product.name) {
-                        if ((detail.quantity - detail.satisfiedQuantity) < $scope.productions[j].leftQuantity) {
-                            $scope.orders[i].details[k].satisfiedQuantity = detail.quantity;
-                            $scope.productions[j].leftQuantity = $scope.productions[j].leftQuantity -
-                                (detail.quantity - detail.satisfiedQuantity);
-                        } else {
-                            $scope.orders[i].details[k].satisfiedQuantity += $scope.productions[j].leftQuantity
-                            $scope.productions[j].leftQuantity = 0;
-                        }
+        angular.forEach(orders, function (order, key) {
+            angular.forEach(order.details, function (detail, key) {
+                if (detail.satisfiedQuantity != detail.quantity) {
+                    for (i = 0; i < productions.length ; ++i) {
+                        if (detail.product.name == productions[i].product.name)
+                         {
+                            if ((new Date(productions[i].date) <= new Date(order.lastDay)) &&
+                           (new Date(order.lastDay) <= new Date(productions[i].date).getTime() + detail.product.timeDeposit * 1000 * 3600 * 24)) {
+                                if ((detail.quantity - detail.satisfiedQuantity) < productions[i].leftQuantity) {
+                                    productions[i].leftQuantity = productions[i].leftQuantity
+                                        - detail.quantity
+                                        + detail.satisfiedQuantity;
+                                    detail.satisfiedQuantity = detail.quantity;
+                                } else {
+                                    detail.satisfiedQuantity += productions[i].leftQuantity;
+                                    productions[i].leftQuantity = 0;
+                                }
+                            }
+                            else {
+                                break;
+                            }
+                        } 
                     }
                 }
-            }
+            });
+        });
+        angular.copy(orders, $scope.orders);
+        angular.copy(productions, $scope.productions);
+    }
+
+    //funzione che setta la classe nel dettaglio ordine
+    $scope.setDetailClass = function (detail) {
+        var status = "";
+        if (detail.quantity == detail.satisfiedQuantity) {
+            status = "success";
         }
+        else if (detail.satisfiedQuantity == 0) {
+            status = "danger";
+        } else if (detail.quantity > detail.satisfiedQuantity) {
+            status = "warning";
+        }
+        return status;
+    }
+
+    //funzione che setta la classe della quantità in eccesso produzione
+    $scope.setProductionClass = function (production) {
+        var status = "";
+        if (production.leftQuantity > 0) {
+            status = "info";
+        }
+        return status;
     }
 
     produciFacile();
