@@ -470,7 +470,47 @@ function ($scope, $filter, clients, products, orders, productions) {
             });
     }
 
-    
-    
+    //funzione che calcola le quantità dei prodotti disponibili in produzione
+    // e la quantità di prodotto soddisfatta degli ordini
+    var produciFacile = function () {
+
+        angular.forEach($scope.orders, function (order, key) {
+            angular.forEach(order.details, function(detail,key){
+                detail.satisfiedQuantity = 0;
+            });
+            
+        });
+        angular.forEach($scope.productions, function (production, key) {
+            production.leftQuantity = production.quantity;
+        });
+
+        for (i = 0; i < $scope.orders.length; ++i) {
+            var order = $scope.orders[i];
+            var details = order.details;
+            for (k = 0; k < details.length; ++k) {
+                var detail = details[k];
+                for (j = 0; j < $scope.productions.length ; ++j) {
+                    if (
+                        //    (($scope.productions[j].date.getTime() +
+                        //(detail.timeDeposit * 1000 * 3600 * 24))
+                        //<= order.lastDay.getTime()) &&
+                    detail.satisfiedQuantity >= detail.quantity)
+                        break;
+                    if (detail.product.name == $scope.productions[j].product.name) {
+                        if ((detail.quantity - detail.satisfiedQuantity) < $scope.productions[j].leftQuantity) {
+                            $scope.orders[i].details[k].satisfiedQuantity = detail.quantity;
+                            $scope.productions[j].leftQuantity = $scope.productions[j].leftQuantity -
+                                (detail.quantity - detail.satisfiedQuantity);
+                        } else {
+                            $scope.orders[i].details[k].satisfiedQuantity += $scope.productions[j].leftQuantity
+                            $scope.productions[j].leftQuantity = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    produciFacile();
 
 }]);

@@ -59,7 +59,6 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th></th>
                     <th>Consegna</th>
                     <th>Scandenza</th>
                     <th>Cliente</th>
@@ -68,7 +67,6 @@
             </thead>
             <tbody>
                 <tr ng-repeat="showOrder in orders | filter:filterProduciFacile">
-                    <td>{{orders.indexOf(showOrder)}}</td>
                     <td class="text-center">
                         <!--Bottone modifica-->
                         <!--<button ng-click="startUpdateOrder(showOrder)" type="button"
@@ -99,7 +97,7 @@
                     <td>
                         <table class="table table-striped table-condensed">
                             <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile">
-                                <td class="text-center">
+                                <td class="text-left">
                                     <!--Bottone cancella-->
                                     <button ng-click="startDeleteOrderDetail(showOrder,showSavedDetail)" class="btn btn-default btn-sm"
                                             tooltip="Cancella">
@@ -111,6 +109,9 @@
                                     <button class="btn btn-default btn-sm" ng-click="beginUpdateOrderDetail(showOrder,showSavedDetail)">
                                         {{showSavedDetail.quantity}}
                                     </button>
+                                </td>
+                                <td class="text-right">
+                                    {{showSavedDetail.satisfiedQuantity}}
                                 </td>
                             </tr>
                         </table>
@@ -129,15 +130,14 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th></th>
                             <th>Data</th>
                             <th>Prodotto</th>
                             <th>Quantità</th>
+                            <th>Quantità disponibile</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="showProduction in productions | filter:filterProduciFacile">
-                            <td>{{productions.indexOf(showProduction)}}</td>
                             <td class="text-center">
                                 <!--Bottone modifica-->
                                 <!--<button ng-click="startUpdateProduction(showProduction)" type="button"
@@ -157,6 +157,9 @@
                                 <button class="btn btn-default btn-sm" ng-click="beginUpdateProductionQuantity(showProduction)">
                                     {{showProduction.quantity}}
                                 </button>
+                            </td>
+                            <td>
+                                {{showProduction.leftQuantity}}
                             </td>
                         </tr>
                     </tbody>
