@@ -6,7 +6,8 @@ var ProductionSchema = new mongoose.Schema({
     product: {
         _id : { type: mongoose.Schema.Types.ObjectId, ref: 'Client' },
         name: String,
-        maxDailyProduction: { type: Number, default: 1 }
+        maxDailyProduction: { type: Number, default: 10 },
+        colliSuRulli: { type: Number, default: 10 }
     }
 });
 

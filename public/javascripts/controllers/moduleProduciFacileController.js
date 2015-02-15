@@ -24,6 +24,7 @@ function ($scope, $filter, clients, products, orders, productions) {
 
     $scope.indexSelectedDetail = -1;
     $scope.alertOrderDetail = false;
+    $scope.alertProductionQuantity = false;
     $scope.indexDuplicateDetail = -1;
 
     $scope.deltaQuantity = null;
@@ -156,6 +157,7 @@ function ($scope, $filter, clients, products, orders, productions) {
         $scope.alertOrderDetail = false;
     }
 
+    
 
     //Funzione che produce l'inserimento dell'ordine
     var addOrder = function () {
@@ -395,23 +397,43 @@ function ($scope, $filter, clients, products, orders, productions) {
             updateProduction();
     };
 
+
+    //funzione che nasconde l'alert della quantità produzione
+    $scope.hideAlertProductionQuantity = function () {
+        $scope.alertProductionQuantity = false;
+    }
+
+    $('#insertUpdateProduction').on('hide.bs.modal', function () {
+        $scope.alertProductionQuantity = false;
+    })
+
+    //funzione che assegna alla quantità di produzione la quantità massima
+    $scope.fillProduction = function () {
+        //angular.copy($scope.production.product.maxDailyProduction, $scope.production.quantity);
+        $scope.production.quantity = $scope.production.product.maxDailyProduction
+    }
+
     //Funzione che produce l'inserimento della produzione
     var addProduction = function () {
-        
-        $('#insertUpdateProduction').modal('hide');
-        productions.create($scope.production, function () {
-            setTimeout(function () {
-                $('#modalSuccessMessage').modal('show');
-            }, 500);
-            produciFacile();
-            $scope.message.title = 'Inserimento';
-            $scope.message.body = 'Produzione inserita';
-            $scope.message.modalita = 'insert';
-            $scope.production = {};
-            $scope.production.product = {};
-            $scope.production.date = new Date();
-            $scope.production.date.setHours(10, 10, 10, 10);
-        });
+        if($scope.production.quantity > $scope.production.product.maxDailyProduction){
+            $scope.alertProductionQuantity = true;
+            $scope.production.quantity = 0;
+        }else{
+            $('#insertUpdateProduction').modal('hide');
+            productions.create($scope.production, function () {
+                setTimeout(function () {
+                    $('#modalSuccessMessage').modal('show');
+                }, 500);
+                produciFacile();
+                $scope.message.title = 'Inserimento';
+                $scope.message.body = 'Produzione inserita';
+                $scope.message.modalita = 'insert';
+                $scope.production = {};
+                $scope.production.product = {};
+                $scope.production.date = new Date();
+                $scope.production.date.setHours(10, 10, 10, 10);
+            });
+        }
     };
 
     //funzione che produce l'update della produzione
@@ -461,6 +483,11 @@ function ($scope, $filter, clients, products, orders, productions) {
         $('#updateQuantityProduction').modal('show');
     }
 
+    //funzione che assegna al deltaProduction la quantità massima da aggiungere 
+    $scope.fillDeltaProduction = function () {
+        $scope.productionDeltaQuantity = $scope.productions[$scope.indexUpdate].product.maxDailyProduction - $scope.productions[$scope.indexUpdate].quantity;
+    }
+
     //funzione che produce la modifica di una produzione (quantità)
     $scope.updateProductionQuantity = function () {
         $('#updateQuantityProduction').modal('hide');
@@ -468,6 +495,31 @@ function ($scope, $filter, clients, products, orders, productions) {
             $scope.productions[$scope.indexUpdate]._id,
             $scope.indexUpdate,
             $scope.productionDeltaQuantity,
+            function () {
+                setTimeout(function () {
+                    $('#modalSuccessMessage').modal('show');
+                }, 500);
+                produciFacile();
+                $scope.message.title = 'Modifica';
+                $scope.message.body = 'Produzione modificata';
+                $scope.message.modalita = 'update';
+            });
+    }
+
+    //funzione che prepara la modifica di una produzione (data)
+    $scope.beginUpdateDateProduction = function (production) {
+        $scope.indexUpdate = $scope.productions.indexOf(production);
+        $scope.date = production.date;
+        $('#updateDateProduction').modal('show');
+    }
+
+    //funzione che produce la modifica di una produzione (data)
+    $scope.updateDateProduction = function(){
+        $('#updateDateProduction').modal('hide');
+        productions.updateDate(
+            $scope.productions[$scope.indexUpdate]._id,
+            $scope.indexUpdate,
+            $scope.date,
             function () {
                 setTimeout(function () {
                     $('#modalSuccessMessage').modal('show');
@@ -502,6 +554,7 @@ function ($scope, $filter, clients, products, orders, productions) {
         angular.forEach(orders, function (order, key) {
             angular.forEach(order.details, function(detail,key){
                 detail.satisfiedQuantity = 0;
+                detail.dateSatisfaction = "";
             });
             
         });
@@ -509,28 +562,45 @@ function ($scope, $filter, clients, products, orders, productions) {
             production.leftQuantity = production.quantity;
         });
 
+        //per ogni ordine order
         angular.forEach(orders, function (order, key) {
+            //per ogni dettaglio ordine detail
             angular.forEach(order.details, function (detail, key) {
-                if (detail.satisfiedQuantity != detail.quantity) {
-                    for (i = 0; i < productions.length ; ++i) {
+                    //per ogni produzione
+                for (i = 0; i < productions.length ; ++i) {
+                    //se la quantità soddisfatta != dalla quantità richiesta (altrimenti ho finito il controllo del dettaglio)
+                    if (detail.satisfiedQuantity != detail.quantity) {
+                        //se i prodotti coincidono
                         if (detail.product.name == productions[i].product.name)
-                         {
-                            if ((new Date(productions[i].date) <= new Date(order.lastDay)) &&
-                           (new Date(order.lastDay) <= new Date(productions[i].date).getTime() + detail.product.timeDeposit * 1000 * 3600 * 24)) {
-                                if ((detail.quantity - detail.satisfiedQuantity) < productions[i].leftQuantity) {
-                                    productions[i].leftQuantity = productions[i].leftQuantity
-                                        - detail.quantity
-                                        + detail.satisfiedQuantity;
-                                    detail.satisfiedQuantity = detail.quantity;
-                                } else {
-                                    detail.satisfiedQuantity += productions[i].leftQuantity;
-                                    productions[i].leftQuantity = 0;
+                        {
+                            //se la data di produzione è minore della data di scadenza (altrimenti interrompo il ciclo sulla produzione per questo ordine)
+                            if ((new Date(productions[i].date) <= new Date(order.lastDay))){
+                                //se inoltre la data di scadenza del dettaglio è minore di quella di permanenza del prodotto in magazzino 
+                                if ((new Date(order.lastDay).getTime() <= new Date(productions[i].date).getTime() + detail.product.timeDeposit * 1000 * 3600 * 24)) {
+                                    //se è rimasto ancora qualcosa di disponibile in produzione (altrimenti non faccio nulla)
+                                    if (productions[i].leftQuantity != 0) {
+                                        //se la quantità mancante dell'ordine è minore di quella disponibile in produzione 
+                                        //me la prendo tutta e lascio quello che rimane
+                                        if ((detail.quantity - detail.satisfiedQuantity) <= productions[i].leftQuantity) {
+                                            productions[i].leftQuantity = productions[i].leftQuantity
+                                                - detail.quantity
+                                                + detail.satisfiedQuantity;
+                                            detail.satisfiedQuantity = detail.quantity;
+                                            detail.dateSatisfaction = new Date(productions[i].date);
+                                            //altrimenti mi prendo quel che resta e azzero la produzione disponibile
+                                        } else {
+                                            detail.satisfiedQuantity += productions[i].leftQuantity;
+                                            productions[i].leftQuantity = 0;
+                                        }
+                                    }
                                 }
                             }
                             else {
                                 break;
                             }
                         } 
+                    } else {
+                        break;
                     }
                 }
             });
@@ -556,11 +626,19 @@ function ($scope, $filter, clients, products, orders, productions) {
     //funzione che setta la classe della quantità in eccesso produzione
     $scope.setProductionClass = function (production) {
         var status = "";
-        if (production.leftQuantity > 0) {
+        if (production.leftQuantity > 50) {
             status = "info";
         }
         return status;
     }
+
+    //funzione che mostra la data minima del dettaglio
+    $scope.minDateDetail = function (order, detail) {
+        var minDate = new Date();
+        minDate = new Date(order.lastDay).getTime() - detail.product.timeDeposit * 1000 * 3600 * 24;
+        return minDate;
+    }
+
 
     produciFacile();
 

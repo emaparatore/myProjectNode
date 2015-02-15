@@ -43,7 +43,8 @@
                 <option value=""></option>
                 <option value="name">Nome</option>
                 <option value="timeDeposit">Tempo di deposito</option>
-                <option value="maxDailyProduction">Produzione massima giornaliera</option>
+                <option value="maxDailyProduction">Produzione Massima</option>
+                <option value="colliSuRulli">Colli su Rulli</option>
             </select>
             <label for="selectOrdinaProdotti">Ordina</label>
         </form>
@@ -62,7 +63,8 @@
                     </th>
                     <th>Nome</th>
                     <th>Tempo di deposito</th>
-                    <th>Produzione massima giornaliera</th>
+                    <th>Produzione Massima</th>
+                    <th>Colli su Rulli</th>
                     <!--<th>Indice</th>-->
                 </tr>
             </thead>
@@ -85,6 +87,7 @@
                     <td>{{product.name}}</td>
                     <td>{{product.timeDeposit}}</td>
                     <td>{{product.maxDailyProduction}} </td>
+                    <td>{{product.colliSuRulli}}</td>
                     <!--<td>{{products.indexOf(product)}}</td>-->
                 </tr>
             </tbody>
@@ -137,8 +140,7 @@
                                    ng-model="timeDeposit"
                                    type="number"
                                    required
-                                   min="0"
-                                   max="30">
+                                   min="0">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="updateProductForm.input2.$valid"></span>
                         </div>
@@ -152,10 +154,24 @@
                                    ng-model="maxDailyProduction"
                                    type="number"
                                    required
-                                   min="0"
-                                   max="1000">
+                                   min="{{colliSuRulli}}">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="updateProductForm.input3.$valid"></span>
+                        </div>
+                        <!--Input colli con un Rullo-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': updateProductForm.input4.$valid}">
+                            <label for="productInput4">Colli su Rulli</label>
+                            <input type="number"
+                                   class="form-control"
+                                   name="input4"
+                                   id="productInput4"
+                                   ng-model="colliSuRulli"
+                                   required
+                                   min="1"
+                                   max="{{maxDailyProduction}}">
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="updateProductForm.input4.$valid"></span>
                         </div>
                         <div class="text-center">
                             <button type="submit"
@@ -219,8 +235,7 @@
                                    id="productInput2"
                                    ng-model="timeDeposit"
                                    required
-                                   min="0"
-                                   max="30">
+                                   min="0">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="insertProductForm.input2.$valid"></span>
 
@@ -235,10 +250,23 @@
                                    id="productInput3"
                                    ng-model="maxDailyProduction"
                                    required
-                                   min="1"
-                                   max="1000">
+                                   min="0">
                             <span class="glyphicon glyphicon-ok form-control-feedback"
                                   ng-show="insertProductForm.input3.$valid"></span>
+                        </div>
+                        <!--Input colli con un Rullo-->
+                        <div class="form-group"
+                             ng-class="{'has-success has-feedback': insertProductForm.input4.$valid}">
+                            <label for="productInput4">Colli su Rulli</label>
+                            <input type="number"
+                                   class="form-control"
+                                   name="input4"
+                                   id="productInput4"
+                                   ng-model="colliSuRulli"
+                                   required
+                                   min="1">
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  ng-show="insertProductForm.input4.$valid"></span>
                         </div>
                         <div class="text-center">
                             <button ng-click="focusInsertProduct()"

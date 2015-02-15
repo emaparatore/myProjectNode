@@ -47,5 +47,15 @@
         });
     }
 
+    o.updateDate = function (id, index, date, callback) {
+        var productionCopy = angular.copy(o.productions[index]);
+        productionCopy.date = new Date(date);
+        return $http.post('/production/' + id, productionCopy).success(function (data) {
+            o.productions[index] = angular.copy(data);
+            callback();
+        });
+    }
+    
+
     return o;
 }])

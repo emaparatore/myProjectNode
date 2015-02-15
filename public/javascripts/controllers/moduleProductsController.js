@@ -42,6 +42,7 @@ function ($scope, products) {
             $scope.productName = '';
             $scope.timeDeposit = '';
             $scope.maxDailyProduction = '';
+            $scope.colliSuRulli = '';
         }
         lastAction = 'inserimento';
     };
@@ -53,7 +54,8 @@ function ($scope, products) {
         products.create({
             name: $scope.productName,
             timeDeposit: $scope.timeDeposit,
-            maxDailyProduction: $scope.maxDailyProduction
+            maxDailyProduction: $scope.maxDailyProduction,
+            colliSuRulli : $scope.colliSuRulli
         }, function () {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
@@ -94,6 +96,7 @@ function ($scope, products) {
         $scope.productName = product.name;
         $scope.timeDeposit = product.timeDeposit;
         $scope.maxDailyProduction = product.maxDailyProduction;
+        $scope.colliSuRulli = product.colliSuRulli;
 
         indexUpdate = $scope.products.indexOf(product);
         lastAction = 'modifica';
@@ -106,6 +109,7 @@ function ($scope, products) {
         product.name = $scope.productName;
         product.timeDeposit = $scope.timeDeposit;
         product.maxDailyProduction = $scope.maxDailyProduction;
+        product.colliSuRulli = $scope.colliSuRulli;
 
         products.update($scope.products[indexUpdate]._id, product, function () {
             setTimeout(function () {
@@ -120,6 +124,7 @@ function ($scope, products) {
             $scope.products[indexUpdate].name = $scope.productName;
             $scope.products[indexUpdate].timeDeposit = $scope.timeDeposit;
             $scope.products[indexUpdate].maxDailyProduction = $scope.maxDailyProduction;
+            $scope.products[indexUpdate].colliSuRulli = $scope.colliSuRulli;
             //$('#updateProductInput1').focus();
         });
 
