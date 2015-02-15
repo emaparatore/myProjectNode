@@ -63,7 +63,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="client in clients | filter:filterClient | orderBy:ordina">
+                <tr ng-repeat="client in clients | filter:filterClient | orderBy:ordina"
+                    class="item-listing">
                     <td class="text-center">
                         <!--Bottone modifica-->
                         <button ng-click="startUpdateClient(client)" type="button"

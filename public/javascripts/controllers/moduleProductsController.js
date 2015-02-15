@@ -66,6 +66,7 @@ function ($scope, products) {
             $scope.productName = '';
             $scope.timeDeposit = '';
             $scope.maxDailyProduction = '';
+            $scope.colliSuRulli = '';
             
         });
     };

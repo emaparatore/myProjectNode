@@ -68,7 +68,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="showOrder in orders | filter:filterProduciFacile">
+                <tr ng-repeat="showOrder in orders | filter:filterProduciFacile"
+                    class="item-listing">
                     <td class="text-center">
                         <!--Bottone modifica-->
                         <!--<button ng-click="startUpdateOrder(showOrder)" type="button"
@@ -100,7 +101,8 @@
                         <!-- Tabella dettaglio ordine -->
                         <table class="table table-condensed table-hover">
                             <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile"
-                                ng-class="setDetailClass(showSavedDetail)">
+                                ng-class="setDetailClass(showSavedDetail)"
+                                class="item-listing">
                                 <td class="text-left">
                                     <!--Bottone cancella-->
                                     <button ng-click="startDeleteOrderDetail(showOrder,showSavedDetail)" class="btn btn-default btn-sm"
@@ -150,7 +152,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="showProduction in productions | filter:filterProduciFacile">
+                        <tr ng-repeat="showProduction in productions | filter:filterProduciFacile" 
+                            class="item-listing">
                             <td class="text-center">
                                 <!--Bottone modifica-->
                                 <!--<button ng-click="startUpdateProduction(showProduction)" type="button"

@@ -1,4 +1,4 @@
-﻿angular.module('produciFacile', ['ui.router', 'ui.bootstrap', 'controllers', 'services'])
+﻿angular.module('produciFacile', ['ui.router', 'ui.bootstrap', 'controllers', 'services','produciFacileAnimations'])
 .config([
 '$stateProvider',
 '$urlRouterProvider',

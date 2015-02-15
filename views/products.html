@@ -70,7 +70,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="product in products | filter:filterProduct |orderBy:ordina ">
+                <tr ng-repeat="product in products | filter:filterProduct |orderBy:ordina "
+                    class="item-listing">
                     <td class="text-center">
                         <!--Bottone modifica-->
                         <button ng-click="startUpdateProduct(product)" type="button"
