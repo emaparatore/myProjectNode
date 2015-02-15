@@ -1,6 +1,6 @@
 {
   "name": "produci-facile-node",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -14,5 +14,8 @@
     "mongoose": "^3.8.21",
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0"
+  },
+  "engines": {
+    "node": "0.10.35"
   }
 }

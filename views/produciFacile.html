@@ -98,7 +98,7 @@
                     <td>{{showOrder.client.companyName}}</td>
                     <td>
                         <!-- Tabella dettaglio ordine -->
-                        <table class="table table-striped table-condensed">
+                        <table class="table table-condensed table-hover">
                             <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile"
                                 ng-class="setDetailClass(showSavedDetail)">
                                 <td class="text-left">
@@ -115,11 +115,11 @@
                                 <td>
                                     {{minDateDetail(showOrder,showSavedDetail) | date : 'dd/MM/yy'}}
                                     <!--<span ng-show="showSavedDetail.quantity - showSavedDetail.satisfiedQuantity != 0">
-                                    </span>-->
+            </span>-->
                                 </td>
                                 <td>{{showSavedDetail.product.name}}</td>
                                 <td class="text-right">
-                                        {{showSavedDetail.quantity}}
+                                    {{showSavedDetail.quantity}}
                                 </td>
                                 <td class="text-right">
                                     {{showSavedDetail.quantity - showSavedDetail.satisfiedQuantity == 0 ? "" : showSavedDetail.quantity - showSavedDetail.satisfiedQuantity}}
