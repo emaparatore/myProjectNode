@@ -24,8 +24,9 @@
         });
     };
 
-    o.delete = function (id, callback) {
+    o.delete = function (id, index, callback) {
         return $http.delete('/production/' + id).success(function (data) {
+            o.productions.splice(index, 1);
             callback();
         });
     };

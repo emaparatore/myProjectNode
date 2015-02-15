@@ -458,7 +458,7 @@ function ($scope, $filter, clients, products, orders, productions) {
 
     //funzione che produce la cancellazione della produzione
     $scope.deleteProduction = function () {
-        productions.delete($scope.productions[$scope.indexDelete]._id, function () {
+        productions.delete($scope.productions[$scope.indexDelete]._id, $scope.indexDelete, function () {
             setTimeout(function () {
                 $('#modalSuccessMessage').modal('show');
             }, 500);
@@ -466,7 +466,6 @@ function ($scope, $filter, clients, products, orders, productions) {
             $scope.message.title = 'Cancellazione';
             $scope.message.body = 'Produzione rimossa';
             $scope.message.modalita = 'delete';
-            $scope.productions.splice($scope.indexDelete, 1);
         });
 
     }
