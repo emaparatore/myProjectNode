@@ -3,3 +3,10 @@ Program Files\MongoDB 2.6 Standard\bin\mongo.exe --dbpath C:\Users\e.paratore\Do
 
 
 C:\Program Files\MongoDB 2.6 Standard\bin>mongod.exe --dbpath C:\Users\e.paratore\Documents\Studio\data
+
+
+Repositori
+https://git.heroku.com/shrounded-atoll-6089.git
+
+URL
+https://shrouded-atoll-6089.herokuapp.com
