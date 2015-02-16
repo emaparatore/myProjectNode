@@ -44,6 +44,7 @@
         productionCopy.quantity += quantity;
         return $http.post('/production/' + id, productionCopy).success(function (data) {
             o.productions[index] = angular.copy(data);
+            angular.copy(orderProductions(o.productions), o.productions);
             callback();
         });
     }
@@ -53,6 +54,7 @@
         productionCopy.date = new Date(date);
         return $http.post('/production/' + id, productionCopy).success(function (data) {
             o.productions[index] = angular.copy(data);
+            angular.copy(orderProductions(o.productions), o.productions);
             callback();
         });
     }
