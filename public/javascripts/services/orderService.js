@@ -61,9 +61,13 @@
         });
     }
 
-    o.updateDetail = function (id, order, indexDetail, index, deltaQuantity ,callback) {
+    o.updateDetail = function (id, order, indexDetail, index, deltaQuantity, type ,callback) {
         var orderUpdate = angular.copy(order);
-        orderUpdate.details[indexDetail].quantity += deltaQuantity;
+        if (type == 'plus') {
+            orderUpdate.details[indexDetail].quantity += deltaQuantity;
+        } else {
+            orderUpdate.details[indexDetail].quantity -= deltaQuantity;
+        }
         return $http.post('/order/' + id, orderUpdate).success(function (data) {
             angular.copy(data, o.orders[index]);
             callback();

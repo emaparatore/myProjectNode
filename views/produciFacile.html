@@ -5,6 +5,24 @@
         <!--<button type="button" ng-click="produciFacile()" class="btn btn-lg btn-primary">
             Calcola
         </button>-->
+    
+        <!-- filtro clienti -->
+        <form class="form-inline">
+            <div class="form-group">
+                <input class="form-control"
+                       name="input1"
+                       id="idfilterClient"
+                       ng-model="filterClientiProduciFacile">
+                <label for="idfilterClient">
+                    <button type="button" class="btn btn-default active">
+                        Cliente &nbsp;
+                        <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
+                    </button>
+                </label>
+            </div>
+        </form>
+
+        <!-- filtro prodotti -->
     <form class="form-inline">
         <div class="form-group">
             <input class="form-control"
@@ -13,11 +31,13 @@
                    ng-model="filterProduciFacile">
             <label for="idfilterProduct">
                 <button type="button" class="btn btn-default active">
+                    Prodotto &nbsp;
                     <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
                 </button>
             </label>
         </div>
     </form>
+
         </div>
 </div>
 
@@ -68,15 +88,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="showOrder in orders | filter:filterProduciFacile"
+                <tr ng-repeat="showOrder in orders | filter: filterProduciFacile | filter: filterClientiProduciFacile"
                     class="item-listing">
                     <td class="text-center">
                         <!--Bottone modifica-->
                         <!--<button ng-click="startUpdateOrder(showOrder)" type="button"
-                                class="btn btn-default btn-sm" data-toggle="modal" data-target="#updateOrder"
-                                tooltip="Modifica">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>-->
+                    class="btn btn-default btn-sm" data-toggle="modal" data-target="#updateOrder"
+                    tooltip="Modifica">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            </button>-->
                         <!-- Bottone aggiungi dettaglio -->
                         <button type="button" class="btn btn-default btn-sm"
                                 ng-click="beginAddOrderDetail(showOrder)"
@@ -111,7 +131,7 @@
                                     </button>
                                     <!-- Bottone modifica -->
                                     <button class="btn btn-default btn-sm"
-                                            tooltip="Modifica" 
+                                            tooltip="Modifica"
                                             ng-click="beginUpdateOrderDetail(showOrder,showSavedDetail)">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </button>
@@ -119,7 +139,7 @@
                                 <td>
                                     {{minDateDetail(showOrder,showSavedDetail) | date : 'dd/MM/yy'}}
                                     <!--<span ng-show="showSavedDetail.quantity - showSavedDetail.satisfiedQuantity != 0">
-            </span>-->
+                        </span>-->
                                 </td>
                                 <td>{{showSavedDetail.product.name}}</td>
                                 <td class="text-right">
@@ -183,7 +203,7 @@
                             <td class="text-center" ng-class="setProductionClass(showProduction)">
                                 {{showProduction.leftQuantity}}
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" ng-class="setMaxProductionClass(showProduction)">
                                 {{showProduction.quantity / showProduction.product.colliSuRulli | number : 1}}
                             </td>
                         </tr>
@@ -615,35 +635,42 @@
                     <tbody>
                         <tr>
                             <td>{{orders[indexUpdate].details[indexSelectedDetail].product.name}}</td>
-                            <td>{{orders[indexUpdate].details[indexSelectedDetail].quantity + deltaQuantity}}</td>
+                            <td>{{orders[indexUpdate].details[indexSelectedDetail].quantity}}</td>
                         </tr>
                     </tbody>
                 </table>
-                <form ng-submit="updateOrderDetailForm.$valid && updateOrderDetail()"
+                <form 
                       name="updateOrderDetailForm"
                       novalidate>
                     <!--Input modifica quantità-->
-                    <div class="form-group"
-                         ng-class="{'has-success has-feedback': updateOrderDetailForm.input1.$valid}">
+                    <div class="form-group">
                         <label for="updateOrderDetailFormInput1">Aggiungi o rimuovi</label>
                         <input class="form-control"
                                name="input1"
                                id="updateOrderDetailFormInput1"
                                ng-model="deltaQuantity"
                                type="number"
-                               required
-                               min="{{-orders[indexUpdate].details[indexSelectedDetail].quantity}}">
-                        <span class="glyphicon glyphicon-ok form-control-feedback"
-                              ng-show="updateOrderDetailForm.input1.$valid"></span>
+                              >
+                        <!--<span class="glyphicon glyphicon-ok form-control-feedback"
+                              ng-show="updateOrderDetailForm.input1.$valid"></span>-->
                     </div>
                     <div class="text-center">
-                        <button type="submit"
-                                class="btn btn-primary"
-                                tooltip="Salva"
-                                tooltip-placement="right">
-                            Salva &nbsp;
-                            <span class="glyphicon glyphicon-floppy-disk lg" aria-hidden="true"></span>
-                        </button>
+                        <span>
+                            <button class="btn btn-primary"
+                                    tooltip="Rimuovi"
+                                    tooltip-placement="left"
+                                    ng-click="updateOrderDetail('minus')">
+                                <span class="glyphicon glyphicon-minus lg" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                        <span>
+                            <button class="btn btn-primary"
+                                    tooltip="Aggiungi"
+                                    tooltip-placement="right"
+                                    ng-click="updateOrderDetail('plus')">
+                                <span class=" glyphicon glyphicon-plus lg" aria-hidden="true"></span>
+                            </button>
+                        </span>
                     </div>
                 </form>
             </div>
@@ -764,16 +791,15 @@
                         <tr>
                             <td>{{productions[indexUpdate].date | date: 'dd/MM/yyyy'}}</td>
                             <td>{{productions[indexUpdate].product.name}}</td>
-                            <td>{{productions[indexUpdate].quantity + productionDeltaQuantity}}</td>
+                            <td>{{productions[indexUpdate].quantity}}</td>
                         </tr>
                     </tbody>
                 </table>
-                <form ng-submit="updateQuantityProductionForm.$valid && updateProductionQuantity()"
+                <form
                       name="updateQuantityProductionForm"
                       novalidate>
                     <!--Input modifica quantità-->
-                    <div class="form-group"
-                         ng-class="{'has-success has-feedback': updateQuantityProductionForm.input1.$valid}">
+                    <div class="form-group">
                         <label for="updateQuantityProductionFormInput1">Aggiungi o rimuovi</label>
                         <input class="form-control"
                                name="input1"
@@ -781,10 +807,9 @@
                                ng-model="productionDeltaQuantity"
                                type="number"
                                required
-                               min="{{-productions[indexUpdate].quantity}}"
-                               max="{{productions[indexUpdate].product.maxDailyProduction - productions[indexUpdate].quantity}}">
-                        <span class="glyphicon glyphicon-ok form-control-feedback"
-                              ng-show="updateQuantityProductionForm.input1.$valid"></span>
+                              >
+                        <!--<span class="glyphicon glyphicon-ok form-control-feedback"
+                              ng-show="updateQuantityProductionForm.input1.$valid"></span>-->
                     </div>
                     <!-- Bottone fill production -->
                     <div class="form-group">
@@ -799,13 +824,24 @@
                         </button>
                     </div>
                     <div class="text-center">
-                        <button type="submit"
-                                class="btn btn-primary"
-                                tooltip="Salva"
-                                tooltip-placement="right">
-                            Salva &nbsp;
-                            <span class="glyphicon glyphicon-floppy-disk lg" aria-hidden="true"></span>
-                        </button>
+                        <span>
+                            <button 
+                                    class="btn btn-primary"
+                                    tooltip="Rimuovi"
+                                    tooltip-placement="left"
+                                    ng-click="updateProductionQuantity('minus')">
+                                <span class="glyphicon glyphicon-minus lg" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                        <span>
+                            <button 
+                                    class="btn btn-primary"
+                                    tooltip="Aggiungi"
+                                    tooltip-placement="right"
+                                    ng-click="updateProductionQuantity('plus')">
+                                <span class=" glyphicon glyphicon-plus lg" aria-hidden="true"></span>
+                            </button>
+                        </span>
                     </div>
                 </form>
             </div>

@@ -75,9 +75,6 @@ function ($scope, clients) {
             //paymentMethod: $scope.paymentMethod,
             //deliveryMethod: $scope.deliveryMethod,
         }, function () {
-            setTimeout(function () {
-                $('#modalSuccessMessage').modal('show');
-            }, 500);
             $scope.message.title = 'Inserimento';
             $scope.message.body = 'Cliente inserito';
             $scope.message.modalita = 'insert';
@@ -91,6 +88,10 @@ function ($scope, clients) {
             $scope.averageRevenue = '';
             $scope.deliveryTime = '';
             //$('#successInsert').show('slide', 'slow');
+            setTimeout(function () {
+                $('#modalSuccessMessage').modal('show');
+            }, 500);
+            
         });
         
     };

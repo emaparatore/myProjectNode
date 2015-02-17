@@ -299,23 +299,29 @@ function ($scope, $filter, clients, products, orders, productions) {
     }
 
     //funzione che produce la modifica di un dettaglio ordine
-    $scope.updateOrderDetail = function () {
-        $('#updateOrderDetail').modal('hide');
-        orders.updateDetail($scope.orders[$scope.indexUpdate]._id,
-            $scope.orders[$scope.indexUpdate],
-            $scope.indexSelectedDetail,
-            $scope.indexUpdate,
-            $scope.deltaQuantity,
-            function () {
-                setTimeout(function () {
-                    $('#modalSuccessMessage').modal('show');
-                }, 500);
-                produciFacile();
-                $scope.message.title = 'Modifica';
-                $scope.message.body = 'Dettaglio modificato';
-                $scope.message.modalita = 'update';
+    $scope.updateOrderDetail = function (type) {
+        if ($scope.deltaQuantity == null || $scope.deltaQuantity == "" || $scope.deltaQuantity < 0
+            || (type == 'minus' && $scope.deltaQuantity > $scope.orders[$scope.indexUpdate].quantity)) {
+            return null;
+        } else {
+            $('#updateOrderDetail').modal('hide');
+            orders.updateDetail($scope.orders[$scope.indexUpdate]._id,
+                $scope.orders[$scope.indexUpdate],
+                $scope.indexSelectedDetail,
+                $scope.indexUpdate,
+                $scope.deltaQuantity,
+                type,
+                function () {
+                    setTimeout(function () {
+                        $('#modalSuccessMessage').modal('show');
+                    }, 500);
+                    produciFacile();
+                    $scope.message.title = 'Modifica';
+                    $scope.message.body = 'Dettaglio modificato';
+                    $scope.message.modalita = 'update';
 
-            });
+                });
+        }
     }
 
     //funzione che prepara la creazione di un dettaglio ordine
@@ -488,21 +494,29 @@ function ($scope, $filter, clients, products, orders, productions) {
     }
 
     //funzione che produce la modifica di una produzione (quantità)
-    $scope.updateProductionQuantity = function () {
-        $('#updateQuantityProduction').modal('hide');
-        productions.updateQuantity(
-            $scope.productions[$scope.indexUpdate]._id,
-            $scope.indexUpdate,
-            $scope.productionDeltaQuantity,
-            function () {
-                setTimeout(function () {
-                    $('#modalSuccessMessage').modal('show');
-                }, 500);
-                produciFacile();
-                $scope.message.title = 'Modifica';
-                $scope.message.body = 'Produzione modificata';
-                $scope.message.modalita = 'update';
-            });
+    $scope.updateProductionQuantity = function (type) {
+        if ($scope.productionDeltaQuantity == null || $scope.productionDeltaQuantity == "" || $scope.productionDeltaQuantity < 0
+            || (type == 'plus' && $scope.productionDeltaQuantity > 
+            $scope.productions[$scope.indexUpdate].product.maxDailyProduction - $scope.productions[$scope.indexUpdate].quantity)
+            || (type == 'minus' && $scope.productionDeltaQuantity > $scope.productions[$scope.indexUpdate].quantity)) {
+            return null;
+        }else {
+            $('#updateQuantityProduction').modal('hide');
+            productions.updateQuantity(
+                $scope.productions[$scope.indexUpdate]._id,
+                $scope.indexUpdate,
+                $scope.productionDeltaQuantity,
+                type,
+                function () {
+                    setTimeout(function () {
+                        $('#modalSuccessMessage').modal('show');
+                    }, 500);
+                    produciFacile();
+                    $scope.message.title = 'Modifica';
+                    $scope.message.body = 'Produzione modificata';
+                    $scope.message.modalita = 'update';
+                });
+        }
     }
 
     //funzione che prepara la modifica di una produzione (data)
@@ -631,6 +645,16 @@ function ($scope, $filter, clients, products, orders, productions) {
         return status;
     }
 
+    //funzione che setta la classe success se la produzione raggiunge la massima (o si avvicina almeno di 10 colli) 
+    $scope.setMaxProductionClass = function (production) {
+        var status = "";
+        if ((production.product.maxDailyProduction - production.quantity) < 10) {
+            status = "success";
+        }
+        return status;
+    }
+
+
     //funzione che mostra la data minima del dettaglio
     $scope.minDateDetail = function (order, detail) {
         var minDate = new Date();
@@ -660,6 +684,7 @@ function ($scope, $filter, clients, products, orders, productions) {
         return result;
     }
 
+    
     produciFacile();
 
 }]);

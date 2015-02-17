@@ -1,8 +1,10 @@
 ****TO DO****
 
 *V Date produzione disabilitate
-* + E - modifica quantità
+*V + E - modifica quantità
 * Pulizia codice (commenti)
 * Pulizia codice (parti superflue: modifica; uniformare controllers e services prodotti e clienti)
 * Abilitare i messaggi indipendenti dalla view
-* Fare due filtri: uno per cliente e uno per prodotto
+*V Fare due filtri: uno per cliente e uno per prodotto
+* Ottimizzare il service server getProduction e getOrders
+* Fornire l'informazione "produzione massima raggiunta"

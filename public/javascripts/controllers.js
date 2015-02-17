@@ -1,1 +1,1 @@
-﻿angular.module('controllers', ['moduleProductsController','moduleClientsController','moduleProduciFacileController'])
+﻿angular.module('controllers', ['moduleProductsController','moduleClientsController','moduleProduciFacileController','moduleMainController'])
