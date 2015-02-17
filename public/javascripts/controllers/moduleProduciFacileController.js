@@ -142,7 +142,7 @@ function ($scope, $filter, clients, products, orders, productions) {
         }
         if (!productDuplicate) {
             $scope.order.details.push($scope.detail);
-        $scope.detail = {};
+            $scope.detail = {};
         }
         $('#orderDetailsInput1').focus();
     };
@@ -210,15 +210,15 @@ function ($scope, $filter, clients, products, orders, productions) {
         orders.delete($scope.orders[$scope.indexDelete]._id,
             $scope.indexDelete,
             function () {
-            setTimeout(function () {
-                $('#modalSuccessMessage').modal('show');
-            }, 500);
-            produciFacile();
-            $scope.message.title = 'Cancellazione';
-            $scope.message.body = 'Ordine rimosso';
-            $scope.message.modalita = 'delete';
+                setTimeout(function () {
+                    $('#modalSuccessMessage').modal('show');
+                }, 500);
+                produciFacile();
+                $scope.message.title = 'Cancellazione';
+                $scope.message.body = 'Ordine rimosso';
+                $scope.message.modalita = 'delete';
             
-        });
+            });
 
     }
 
@@ -242,14 +242,14 @@ function ($scope, $filter, clients, products, orders, productions) {
             $scope.date,
             $scope.indexUpdate,
             function () {
-            setTimeout(function () {
-                $('#modalSuccessMessage').modal('show');
-            }, 500);
-            produciFacile();
-            $scope.message.title = 'Modifica';
-            $scope.message.body = 'Ordine modificato';
-            $scope.message.modalita = 'update';
-        });
+                setTimeout(function () {
+                    $('#modalSuccessMessage').modal('show');
+                }, 500);
+                produciFacile();
+                $scope.message.title = 'Modifica';
+                $scope.message.body = 'Ordine modificato';
+                $scope.message.modalita = 'update';
+            });
     }
 
     //funzione che prepara la cancellazione di un dettaglio ordine
@@ -272,15 +272,15 @@ function ($scope, $filter, clients, products, orders, productions) {
             $scope.indexSelectedDetail,
             $scope.indexUpdate,
             function () {
-            setTimeout(function () {
-                $('#modalSuccessMessage').modal('show');
-            }, 500);
-            produciFacile();
-            $scope.message.title = 'Cancellazione';
-            $scope.message.body = 'Dettaglio rimosso';
-            $scope.message.modalita = 'delete';
+                setTimeout(function () {
+                    $('#modalSuccessMessage').modal('show');
+                }, 500);
+                produciFacile();
+                $scope.message.title = 'Cancellazione';
+                $scope.message.body = 'Dettaglio rimosso';
+                $scope.message.modalita = 'delete';
 
-        });
+            });
     }
 
     //funzione che setta il focus in modalità modifica dettaglio ordine
@@ -307,15 +307,15 @@ function ($scope, $filter, clients, products, orders, productions) {
             $scope.indexUpdate,
             $scope.deltaQuantity,
             function () {
-            setTimeout(function () {
-                $('#modalSuccessMessage').modal('show');
-            }, 500);
-            produciFacile();
-            $scope.message.title = 'Modifica';
-            $scope.message.body = 'Dettaglio modificato';
-            $scope.message.modalita = 'update';
+                setTimeout(function () {
+                    $('#modalSuccessMessage').modal('show');
+                }, 500);
+                produciFacile();
+                $scope.message.title = 'Modifica';
+                $scope.message.body = 'Dettaglio modificato';
+                $scope.message.modalita = 'update';
 
-        });
+            });
     }
 
     //funzione che prepara la creazione di un dettaglio ordine
@@ -565,7 +565,7 @@ function ($scope, $filter, clients, products, orders, productions) {
         angular.forEach(orders, function (order, key) {
             //per ogni dettaglio ordine detail
             angular.forEach(order.details, function (detail, key) {
-                    //per ogni produzione
+                //per ogni produzione
                 for (i = 0; i < productions.length ; ++i) {
                     //se la quantità soddisfatta != dalla quantità richiesta (altrimenti ho finito il controllo del dettaglio)
                     if (detail.satisfiedQuantity != detail.quantity) {
@@ -638,6 +638,27 @@ function ($scope, $filter, clients, products, orders, productions) {
         return minDate;
     }
 
+    //funziona che setta le date proibite per la produzione
+    $scope.disabled = function (date, mode) {
+        var result = false;
+        var count = 0;
+        
+        for (i = 0; i < $scope.productions.length && count < 2 ; ++i) {
+            var dateProduction = new Date($scope.productions[i].date);
+            if (date.getDate() == dateProduction.getDate()
+                   && date.getMonth() == dateProduction.getMonth()
+                   && date.getYear() == dateProduction.getYear()) {
+                ++count;
+            }
+            else if (date < dateProduction) {
+                break;
+            }
+        }
+        if (count == 2) {
+            result = true;
+        }
+        return result;
+    }
 
     produciFacile();
 

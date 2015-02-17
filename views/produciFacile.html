@@ -449,9 +449,9 @@
                                datepicker-popup="dd/MM/yyyy"
                                required />
                         <datepicker ng-model="production.date"
-                                    min-date="minDate"
                                     show-weeks="false"
-                                    class="well well-sm"></datepicker>
+                                    class="well well-sm"
+                                    date-disabled="disabled(date, mode)"></datepicker>
                     </div>
                     <!-- Input Prodotto -->
                     <div class="form-group"
@@ -569,7 +569,6 @@
             <div class="modal-body">
                 <div style="display:inline-block; min-height:290px;">
                     <datepicker ng-model="date"
-                                min-date="minDate"
                                 show-weeks="false"
                                 class="well well-sm"></datepicker>
                 </div>               
@@ -836,7 +835,8 @@
                     <datepicker ng-model="date"
                                 min-date="minDate"
                                 show-weeks="false"
-                                class="well well-sm"></datepicker>
+                                class="well well-sm"
+                                date-disabled="disabled(date, mode)"></datepicker>
                 </div>
                 <div class="text-center">
                     <button type="button"

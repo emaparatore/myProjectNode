@@ -1,21 +1,8 @@
-{
-	data : "data"
-	produzione : {
-			prodotto_id : "idProdotto"
-			nomeProdotto : "nomeProdotto"
-			quantitita : "quantita"
-			},
-	magazzinoProduzione:[
-				{
-				nomeProdotto : "nomeProdotto"
-				quantita : "quantita"
-				},
-				{...},
-				{...},
-				{...},
-				],
-	ordini :[
-			{nomeAzienda :
-			}
-			]
-}
+****TO DO****
+
+*V Date produzione disabilitate
+* + E - modifica quantità
+* Pulizia codice (commenti)
+* Pulizia codice (parti superflue: modifica; uniformare controllers e services prodotti e clienti)
+* Abilitare i messaggi indipendenti dalla view
+* Fare due filtri: uno per cliente e uno per prodotto
