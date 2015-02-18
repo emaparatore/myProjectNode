@@ -5,39 +5,64 @@
         <!--<button type="button" ng-click="produciFacile()" class="btn btn-lg btn-primary">
             Calcola
         </button>-->
-    
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
         <!-- Filtro -->
-        <form class="form-inline">
-            <!-- filtro clienti -->
-            <div class="form-group">
-                <input class="form-control"
-                       name="input1"
-                       id="idfilterClient"
-                       ng-model="filterClientiProduciFacile">
-                <label for="idfilterClient">
-                    <button type="button" class="btn btn-default active">
-                        Cliente &nbsp;
-                        <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
-                    </button>
-                </label>
-            </div>
-        
-        <!-- filtro prodotti -->
-        <div class="form-group">
-            <input class="form-control"
-                   name="input1"
-                   id="idfilterProduct"
-                   ng-model="filterProduciFacile">
-            <label for="idfilterProduct">
-                <button type="button" class="btn btn-default active">
-                    Prodotto &nbsp;
-                    <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
-                </button>
-            </label>
-        </div>
-    </form>
+        <div>
+            <h3>
+                Filtro
+                <!--<span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>-->
+            </h3>
+            <form class="form-inline">
+                <!-- filtro clienti -->
+                <div class="form-group">
+                    <input class="form-control"
+                           name="input1"
+                           id="idfilterClient"
+                           ng-model="filterClientiProduciFacile">
+                    <label for="idfilterClient">
+                        <button type="button" class="btn btn-default active">
+                            Cliente &nbsp;
+                            <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
+                        </button>
+                    </label>
+                </div>
 
+                <!-- filtro prodotti -->
+                <div class="form-group">
+                    <input class="form-control"
+                           name="input1"
+                           id="idfilterProduct"
+                           ng-model="filterProduciFacile">
+                    <label for="idfilterProduct">
+                        <button type="button" class="btn btn-default active">
+                            Prodotto &nbsp;
+                            <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
+                        </button>
+                    </label>
+                </div>
+
+                <!-- Filtro dettagli soddisfatti o no -->
+                <div class="form-group">
+                    <select ng-model="filterDetailSatisfied" class="form-control" id="idfilterDetailSatisfied">
+                        <option value=""></option>
+                        <option value="success">Soddisfatti</option>
+                        <option value="warning">In produzione</option>
+                        <option value="danger">Da soddisfare</option>
+                    </select>
+                    <label for="idfilterDetailSatisfied">
+                        <button type="button" class="btn btn-default active">
+                            Soddisfazione &nbsp;
+                            <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
+                        </button>
+                    </label>
+                </div>
+
+            </form>
         </div>
+    </div>
 </div>
 
 
@@ -66,156 +91,156 @@
                 <span class=" glyphicon glyphicon-plus" aria-hidden="true">
                 </span>
             </button>
-            
+
         </h2>
     </div>
 
 </div>
 
 <!-- Tabella ordini -->
-    <div class="row"> 
-        <div class="col-md-7">
+<div class="row">
+    <div class="col-md-7">
         <div class="table-responsive">
-        <table class="table table-bordered table-hover table-condensed">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th class="text-center">Consegna</th>
-                    <th class ="text-center">Scadenza</th>
-                    <th class="text-center">Cliente</th>
-                    <th class="text-center">Dettaglio</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="showOrder in orders | filter: filterProduciFacile | filter: filterClientiProduciFacile"
-                    class="item-listing">
-                    <td class="text-center">
-                        <!--Bottone modifica-->
-                        <!--<button ng-click="startUpdateOrder(showOrder)" type="button"
-                    class="btn btn-default btn-sm" data-toggle="modal" data-target="#updateOrder"
-                    tooltip="Modifica">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-            </button>-->
-                        <!-- Bottone aggiungi dettaglio -->
-                        <button type="button" class="btn btn-default btn-sm"
-                                ng-click="beginAddOrderDetail(showOrder)"
-                                tooltip="Aggiungi">
-                            <span class=" glyphicon glyphicon-plus" aria-hidden="true">
-                            </span>
-                        </button>
-                        <!--Bottone cancella-->
-                        <button ng-click="startDeleteOrder(showOrder)" class="btn btn-default btn-sm"
-                                tooltip="Cancella">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </button>
-                    </td>
-                    <td class="text-center">
-                        <button class="btn btn-default btn-sm" type="button" ng-click="beginUpdateOrderDate(showOrder)">
-                            {{showOrder.date | date:'dd/MM/yy'}}
-                        </button>
-                    </td>
-                    <td class="text-center">{{showOrder.lastDay | date:'dd/MM/yy'}}</td>
-                    <td>{{showOrder.client.companyName}}</td>
-                    <td>
-                        <!-- Tabella dettaglio ordine -->
-                        <table class="table table-condensed table-hover">
-                            <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile"
-                                ng-class="setDetailClass(showSavedDetail)"
-                                class="item-listing">
-                                <td class="text-left">
-                                    <!--Bottone cancella-->
-                                    <button ng-click="startDeleteOrderDetail(showOrder,showSavedDetail)" class="btn btn-default btn-sm"
-                                            tooltip="Cancella">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
-                                    <!-- Bottone modifica -->
-                                    <button class="btn btn-default btn-sm"
-                                            tooltip="Modifica"
-                                            ng-click="beginUpdateOrderDetail(showOrder,showSavedDetail)">
-                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                                <td>
-                                    {{minDateDetail(showOrder,showSavedDetail) | date : 'dd/MM/yy'}}
-                                    <!--<span ng-show="showSavedDetail.quantity - showSavedDetail.satisfiedQuantity != 0">
-                        </span>-->
-                                </td>
-                                <td>{{showSavedDetail.product.name}}</td>
-                                <td class="text-right">
-                                    {{showSavedDetail.quantity}}
-                                </td>
-                                <td class="text-right">
-                                    {{showSavedDetail.quantity - showSavedDetail.satisfiedQuantity == 0 ? "" : showSavedDetail.quantity - showSavedDetail.satisfiedQuantity}}
-                                    {{showSavedDetail.dateSatisfaction | date: 'dd/MM/yy'}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-center">Cliente</th>
+                        <th class="text-center">Consegna</th>
+                        <th class="text-center">Scadenza</th>
+                        <th class="text-center">Dettaglio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="showOrder in orders | filter: filterProduciFacile | filter: filterClientiProduciFacile"
+                        class="item-listing">
+                        <td class="text-center">
+                            <!--Bottone modifica-->
+                            <!--<button ng-click="startUpdateOrder(showOrder)" type="button"
+                                    class="btn btn-default btn-sm" data-toggle="modal" data-target="#updateOrder"
+                                    tooltip="Modifica">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </button>-->
+                            <!-- Bottone aggiungi dettaglio -->
+                            <button type="button" class="btn btn-default btn-sm"
+                                    ng-click="beginAddOrderDetail(showOrder)"
+                                    tooltip="Aggiungi">
+                                <span class=" glyphicon glyphicon-plus" aria-hidden="true">
+                                </span>
+                            </button>
+                            <!--Bottone cancella-->
+                            <button ng-click="startDeleteOrder(showOrder)" class="btn btn-default btn-sm"
+                                    tooltip="Cancella">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                        <td>{{showOrder.client.companyName}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-default btn-sm" type="button" ng-click="beginUpdateOrderDate(showOrder)">
+                                {{showOrder.date | date:'dd/MM/yy'}}
+                            </button>
+                        </td>
+                        <td class="text-center">{{showOrder.lastDay | date:'dd/MM/yy'}}</td>
+                        <td>
+                            <!-- Tabella dettaglio ordine -->
+                            <table class="table table-condensed table-hover">
+                                <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile"
+                                    ng-class="setDetailClass(showSavedDetail)"
+                                    class="item-listing">
+                                    <td class="text-left">
+                                        <!--Bottone cancella-->
+                                        <button ng-click="startDeleteOrderDetail(showOrder,showSavedDetail)" class="btn btn-default btn-sm"
+                                                tooltip="Cancella">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>
+                                        <!-- Bottone modifica -->
+                                        <button class="btn btn-default btn-sm"
+                                                tooltip="Modifica"
+                                                ng-click="beginUpdateOrderDetail(showOrder,showSavedDetail)">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        {{minDateDetail(showOrder,showSavedDetail) | date : 'dd/MM/yy'}}
+                                        <!--<span ng-show="showSavedDetail.quantity - showSavedDetail.satisfiedQuantity != 0">
+                                        </span>-->
+                                    </td>
+                                    <td>{{showSavedDetail.product.name}}</td>
+                                    <td class="text-right">
+                                        {{showSavedDetail.quantity}}
+                                    </td>
+                                    <td class="text-right">
+                                        {{showSavedDetail.quantity - showSavedDetail.satisfiedQuantity == 0 ? "" : showSavedDetail.quantity - showSavedDetail.satisfiedQuantity}}
+                                        {{showSavedDetail.dateSatisfaction | date: 'dd/MM/yy'}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-        
-        <!-- Tabella Produzione -->
-        <div class="col-md-5">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover table-condense">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th class="text-center">Data</th>
-                            <th class="text-center">Prodotto</th>
-                            <th class="text-center">Quantità</th>
-                            <th class="text-center">Eccesso</th>
-                            <th class="text-center">Rulli</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="showProduction in productions | filter:filterProduciFacile" 
-                            class="item-listing">
-                            <td class="text-center">
-                                <!--Bottone modifica-->
-                                <!--<button ng-click="startUpdateProduction(showProduction)" type="button"
-                                        class="btn btn-default btn-sm" data-toggle="modal"
-                                        tooltip="Modifica">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                </button>-->
-                                <!--Bottone cancella-->
-                                <button ng-click="startDeleteProduction(showProduction)" class="btn btn-default btn-sm"
-                                        tooltip="Cancella">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </button>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-default btn-sm " ng-click="beginUpdateDateProduction(showProduction)">
-                                    {{showProduction.date | date:'dd/MM/yy'}}
-                                </button>
-                            </td>
-                            <td>{{showProduction.product.name}}</td>
-                            <td class="text-center">
-                                <button class="btn btn-default btn-sm" ng-click="beginUpdateProductionQuantity(showProduction)">
-                                    {{showProduction.quantity}}
-                                </button>
-                            </td>
-                            <td class="text-center" ng-class="setProductionClass(showProduction)">
-                                {{showProduction.leftQuantity}}
-                            </td>
-                            <td class="text-center" ng-class="setMaxProductionClass(showProduction)">
-                                {{showProduction.quantity / showProduction.product.colliSuRulli | number : 1}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
-            </div>
+
+    <!-- Tabella Produzione -->
+    <div class="col-md-5">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-condense">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-center">Data</th>
+                        <th class="text-center">Prodotto</th>
+                        <th class="text-center">Quantità</th>
+                        <th class="text-center">Eccesso</th>
+                        <th class="text-center">Rulli</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="showProduction in productions | filter:filterProduciFacile"
+                        class="item-listing">
+                        <td class="text-center">
+                            <!--Bottone modifica-->
+                            <!--<button ng-click="startUpdateProduction(showProduction)" type="button"
+                                    class="btn btn-default btn-sm" data-toggle="modal"
+                                    tooltip="Modifica">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </button>-->
+                            <!--Bottone cancella-->
+                            <button ng-click="startDeleteProduction(showProduction)" class="btn btn-default btn-sm"
+                                    tooltip="Cancella">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-default btn-sm " ng-click="beginUpdateDateProduction(showProduction)">
+                                {{showProduction.date | date:'dd/MM/yy'}}
+                            </button>
+                        </td>
+                        <td>{{showProduction.product.name}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-default btn-sm" ng-click="beginUpdateProductionQuantity(showProduction)">
+                                {{showProduction.quantity}}
+                            </button>
+                        </td>
+                        <td class="text-center" ng-class="setProductionClass(showProduction)">
+                            {{showProduction.leftQuantity}}
+                        </td>
+                        <td class="text-center" ng-class="setMaxProductionClass(showProduction)">
+                            {{showProduction.quantity / showProduction.product.colliSuRulli | number : 1}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 
 <!-- Modal Insert Order-->
-<div class="modal fade" id="insertUpdateOrder" tabindex="-1" role="dialog" 
-     aria-labelledby="insertUpdateOrderLabel" 
+<div class="modal fade" id="insertUpdateOrder" tabindex="-1" role="dialog"
+     aria-labelledby="insertUpdateOrderLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -228,15 +253,16 @@
                 </button>
                 <h4 class="modal-title"
                     id="insertOrderUpdateLabel">
-                    <label ng-if="modalita == 'insert'">Inserisci</label> 
+                    <label ng-if="modalita == 'insert'">Inserisci</label>
                     <label ng-if="modalita == 'update'"> Modifica </label>
-                    <span ng-if="modalita == 'update'" class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 
+                    <span ng-if="modalita == 'update'" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </h4>
             </div>
             <div class="modal-body">
                 <tabset>
                     <!-- Tab per l'inserimento cliente e data -->
-                    <tab heading="Data - Cliente"><br />
+                    <tab heading="Data - Cliente">
+                        <br />
                         <form ng-submit="insertUpdateOrderForm.$valid && addUpdateOrder()"
                               class="formInsert"
                               name="insertUpdateOrderForm"
@@ -245,6 +271,7 @@
                             <div class="form-group"
                                  ng-class="{'has-success has-feedback': insertUpdateOrderForm.input1.$valid}">
                                 <!--{{order.date | date:'dd/MM/yyyy'}}-->
+                                <label for="orderInput1">Da
                                 <label for="orderInput1">Data</label>
                                 <input class="form-control"
                                        name="input1"
@@ -253,13 +280,13 @@
                                        datepicker-popup="dd/MM/yyyy"
                                        required />
                                 <!--<span class="glyphicon glyphicon-ok form-control-feedback"
-            ng-show="insertOrderForm.input1.$valid"></span>-->
+                                ng-show="insertOrderForm.input1.$valid"></span>-->
                                 <div style="display:inline-block; min-height:290px;">
-                                <datepicker ng-model="order.date"
-                                            min-date="minDate"
-                                            show-weeks="false"
-                                            class="well well-sm"></datepicker>
-                                    </div>
+                                    <datepicker ng-model="order.date"
+                                                min-date="minDate"
+                                                show-weeks="false"
+                                                class="well well-sm"></datepicker>
+                                </div>
                             </div>
 
                             <!--Input CLiente-->
@@ -279,7 +306,7 @@
                                         name="inputDetails1"
                                         required></select>-->
                                 <!--<span class="glyphicon glyphicon-ok form-control-feedback"
-        ng-show="insertOrderForm.input2.$valid"></span>-->
+                                ng-show="insertOrderForm.input2.$valid"></span>-->
                             </div>
                             <div class="text-center">
                                 <button type="submit"
@@ -291,70 +318,72 @@
                             </div>
                         </form>
                     </tab>
-                <!-- Tab per l'inserimento dettagli -->
-                <tab heading="Dettagli"><br />
-                    <form ng-submit="insertOrderDetailsForm.$valid && addDetailOrder()"
-                          name="insertOrderDetailsForm"
-                          novalidate>
+                    <!-- Tab per l'inserimento dettagli -->
+                    <tab heading="Dettagli">
+                        <br />
+                        <form ng-submit="insertOrderDetailsForm.$valid && addDetailOrder()"
+                              name="insertOrderDetailsForm"
+                              novalidate>
 
-                        <!-- Input Prodotto -->
-                        <div class="form-group"
-                             ng-class="{'has-success has-feedback': insertOrderDetailsForm.inputDetails1.$valid}">
-                            <label for="orderDetailsInput1">Prodotto</label>
-                            <select ng-options="product as product.name for product in products | orderBy:'name'"
-                                    ng-model="detail.product"
-                                    class="form-control"
-                                    id="orderDetailsInput1"
-                                    name="inputDetails1"
-                                    required></select>
-                        </div>
-                        <div class="form-group"
-                             ng-class="{'has-success has-feedback': insertOrderDetailsForm.inputDetails2.$valid}">
-                            <label for="orderDetailsInput2">Quantità</label>
-                            <input class="form-control"
-                                   name="inputDetails2"
-                                   id="orderDetailsInput2"
-                                   ng-model="detail.quantity"
-                                   type="number"
-                                   required
-                                   min="0">
-                            <span class="glyphicon glyphicon-ok form-control-feedback"
-                                  ng-show="insertOrderDetailsForm.inputDetails2.$valid"></span>
-                        </div>
-                        <div class="alert alert-info alert-dismissible" role="alert" ng-show="alertOrderDetail">
-                            <button type="button" class="close" ng-click="hideAlertOrderDetail()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            Prodotto già presente
-                        </div>
-                        <button type="submit"
-                                class="btn btn-primary"
-                                tooltip="Aggiungi"
-                                tooltip-placement="right">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        </button>
-                    </form>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Prodotto</th>
-                                <th>Quantità</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="showDetail in order.details">
-                                <td>
-                                    <!--Bottone cancella-->
-                                    <button ng-click="deleteDetail(showDetail)" class="btn btn-default"
-                                            tooltip="Cancella">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                                <td>{{showDetail.product.name}}</td>
-                                <td>{{showDetail.quantity}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </tab></tabset>
+                            <!-- Input Prodotto -->
+                            <div class="form-group"
+                                 ng-class="{'has-success has-feedback': insertOrderDetailsForm.inputDetails1.$valid}">
+                                <label for="orderDetailsInput1">Prodotto</label>
+                                <select ng-options="product as product.name for product in products | orderBy:'name'"
+                                        ng-model="detail.product"
+                                        class="form-control"
+                                        id="orderDetailsInput1"
+                                        name="inputDetails1"
+                                        required></select>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-success has-feedback': insertOrderDetailsForm.inputDetails2.$valid}">
+                                <label for="orderDetailsInput2">Quantità</label>
+                                <input class="form-control"
+                                       name="inputDetails2"
+                                       id="orderDetailsInput2"
+                                       ng-model="detail.quantity"
+                                       type="number"
+                                       required
+                                       min="0">
+                                <span class="glyphicon glyphicon-ok form-control-feedback"
+                                      ng-show="insertOrderDetailsForm.inputDetails2.$valid"></span>
+                            </div>
+                            <div class="alert alert-info alert-dismissible" role="alert" ng-show="alertOrderDetail">
+                                <button type="button" class="close" ng-click="hideAlertOrderDetail()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                Prodotto già presente
+                            </div>
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    tooltip="Aggiungi"
+                                    tooltip-placement="right">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </button>
+                        </form>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Prodotto</th>
+                                    <th>Quantità</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="showDetail in order.details">
+                                    <td>
+                                        <!--Bottone cancella-->
+                                        <button ng-click="deleteDetail(showDetail)" class="btn btn-default"
+                                                tooltip="Cancella">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                    <td>{{showDetail.product.name}}</td>
+                                    <td>{{showDetail.quantity}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </tab>
+                </tabset>
             </div>
             <!--<div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
@@ -363,7 +392,7 @@
     </div>
 </div>
 
- <!--Modal Delete-->
+<!--Modal Delete-->
 <div class="modal fade" id="deleteOrder" tabindex="-1" role="dialog" aria-labelledby="deleteOrderLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -414,7 +443,7 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-warning" role="alert">
-                    Cancellare il dettaglio ordine di {{orders[indexUpdate].details[indexSelectedDetail].quantity}} colli di {{orders[indexUpdate].details[indexSelectedDetail].product.name}}? 
+                    Cancellare il dettaglio ordine di {{orders[indexUpdate].details[indexSelectedDetail].quantity}} colli di {{orders[indexUpdate].details[indexSelectedDetail].product.name}}?
                 </div>
             </div>
             <div class="modal-footer">
@@ -448,8 +477,8 @@
                     <span ng-if="modalita == 'update'" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </h4>
             </div>
-            <div class="modal-body"> 
-                    
+            <div class="modal-body">
+
                 <form ng-submit="insertUpdateProductionForm.$valid && addUpdateProduction()
                       && quantitaProduzioneValida()"
                       class="formInsert"
@@ -460,7 +489,7 @@
                          ng-class="{'has-success has-feedback': insertUpdateProductionForm.input1.$valid}">
                         <!--{{order.date | date:'dd/MM/yyyy'}}-->
                         <label for="productionIn
-                        <label for="productionInput1">Data</label>
+                        <label for=" productioninput1">Data</label>
                         <input class="form-control"
                                name="input1"
                                id="productionInput1"
@@ -526,9 +555,9 @@
                     </div>
 
                 </form>
-                    
-                    
-                
+
+
+
             </div>
             <!--<div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
@@ -581,8 +610,8 @@
                 </button>
                 <h4 class="modal-title"
                     id="updateDateLabel">
-                    Modifica la data dell'ordine 
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    Modifica la data dell'ordine
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </h4>
             </div>
             <div class="modal-body">
@@ -590,20 +619,20 @@
                     <datepicker ng-model="date"
                                 show-weeks="false"
                                 class="well well-sm"></datepicker>
-                </div>               
+                </div>
                 <div class="text-center">
                     <button type="button"
                             class="btn btn-primary"
-                            tooltip="Salva" 
+                            tooltip="Salva"
                             tooltip-placement="right"
                             ng-click="updateDateOrder()">
                         Salva &nbsp;
                         <span class="glyphicon glyphicon-floppy-disk lg" aria-hidden="true"></span>
                     </button>
                 </div>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <!-- Modal update Detail Order -->
@@ -638,8 +667,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <form 
-                      name="updateOrderDetailForm"
+                <form name="updateOrderDetailForm"
                       novalidate>
                     <!--Input modifica quantità-->
                     <div class="form-group">
@@ -648,8 +676,7 @@
                                name="input1"
                                id="updateOrderDetailFormInput1"
                                ng-model="deltaQuantity"
-                               type="number"
-                              >
+                               type="number">
                         <!--<span class="glyphicon glyphicon-ok form-control-feedback"
                               ng-show="updateOrderDetailForm.input1.$valid"></span>-->
                     </div>
@@ -697,60 +724,60 @@
                 </h4>
             </div>
             <div class="modal-body">
-                        <br />
-                        <form ng-submit="insertOrderDetailsForm.$valid && addNewDetailOrder()"
-                              name="insertOrderDetailsForm"
-                              novalidate>
+                <br />
+                <form ng-submit="insertOrderDetailsForm.$valid && addNewDetailOrder()"
+                      name="insertOrderDetailsForm"
+                      novalidate>
 
-                            <!-- Input Prodotto -->
-                            <div class="form-group"
-                                 ng-class="{'has-success has-feedback': insertOrderDetailsForm.inputDetails1.$valid}">
-                                <label for="orderDetailsInput1">Prodotto</label>
-                                <select ng-options="product as product.name for product in products | orderBy:'name'"
-                                        ng-model="detail.product"
-                                        class="form-control"
-                                        id="orderDetailsInput1"
-                                        name="inputDetails1"
-                                        required></select>
-                            </div>
-                            <div class="form-group"
-                                 ng-class="{'has-success has-feedback': insertOrderDetailsForm.inputDetails2.$valid}">
-                                <label for="orderDetailsInput2">Quantità</label>
-                                <input class="form-control"
-                                       name="inputDetails2"
-                                       id="orderDetailsInput2"
-                                       ng-model="detail.quantity"
-                                       type="number"
-                                       required
-                                       min="0">
-                                <span class="glyphicon glyphicon-ok form-control-feedback"
-                                      ng-show="insertOrderDetailsForm.inputDetails2.$valid"></span>
-                            </div>
-                            <div class="alert alert-info alert-dismissible" role="alert" ng-show="alertOrderDetail">
-                                <button type="button" class="close" ng-click="hideAlertOrderDetail()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                Prodotto già presente
-                            </div>
-                            <button type="submit"
-                                    class="btn btn-primary"
-                                    tooltip="Aggiungi"
-                                    tooltip-placement="right">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            </button>
-                        </form>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Prodotto</th>
-                                    <th>Quantità</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="showDetail in details">
-                                    <td>{{showDetail.product.name}}</td>
-                                    <td>{{showDetail.quantity}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- Input Prodotto -->
+                    <div class="form-group"
+                         ng-class="{'has-success has-feedback': insertOrderDetailsForm.inputDetails1.$valid}">
+                        <label for="orderDetailsInput1">Prodotto</label>
+                        <select ng-options="product as product.name for product in products | orderBy:'name'"
+                                ng-model="detail.product"
+                                class="form-control"
+                                id="orderDetailsInput1"
+                                name="inputDetails1"
+                                required></select>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{'has-success has-feedback': insertOrderDetailsForm.inputDetails2.$valid}">
+                        <label for="orderDetailsInput2">Quantità</label>
+                        <input class="form-control"
+                               name="inputDetails2"
+                               id="orderDetailsInput2"
+                               ng-model="detail.quantity"
+                               type="number"
+                               required
+                               min="0">
+                        <span class="glyphicon glyphicon-ok form-control-feedback"
+                              ng-show="insertOrderDetailsForm.inputDetails2.$valid"></span>
+                    </div>
+                    <div class="alert alert-info alert-dismissible" role="alert" ng-show="alertOrderDetail">
+                        <button type="button" class="close" ng-click="hideAlertOrderDetail()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Prodotto già presente
+                    </div>
+                    <button type="submit"
+                            class="btn btn-primary"
+                            tooltip="Aggiungi"
+                            tooltip-placement="right">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </form>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Prodotto</th>
+                            <th>Quantità</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="showDetail in details">
+                            <td>{{showDetail.product.name}}</td>
+                            <td>{{showDetail.quantity}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <!--<div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
@@ -778,7 +805,7 @@
                 </h4>
             </div>
             <div class="modal-body">
-               <table class="table table-bordered table-condensed table-striped">
+                <table class="table table-bordered table-condensed table-striped">
                     <thead>
                         <tr>
                             <th>Data</th>
@@ -794,8 +821,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <form
-                      name="updateQuantityProductionForm"
+                <form name="updateQuantityProductionForm"
                       novalidate>
                     <!--Input modifica quantità-->
                     <div class="form-group">
@@ -805,8 +831,7 @@
                                id="updateQuantityProductionFormInput1"
                                ng-model="productionDeltaQuantity"
                                type="number"
-                               required
-                              >
+                               required>
                         <!--<span class="glyphicon glyphicon-ok form-control-feedback"
                               ng-show="updateQuantityProductionForm.input1.$valid"></span>-->
                     </div>
@@ -824,8 +849,7 @@
                     </div>
                     <div class="text-center">
                         <span>
-                            <button 
-                                    class="btn btn-primary"
+                            <button class="btn btn-primary"
                                     tooltip="Rimuovi"
                                     tooltip-placement="left"
                                     ng-click="updateProductionQuantity('minus')">
@@ -833,8 +857,7 @@
                             </button>
                         </span>
                         <span>
-                            <button 
-                                    class="btn btn-primary"
+                            <button class="btn btn-primary"
                                     tooltip="Aggiungi"
                                     tooltip-placement="right"
                                     ng-click="updateProductionQuantity('plus')">
