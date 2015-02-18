@@ -7,4 +7,4 @@
 * Abilitare i messaggi indipendenti dalla view
 *V Fare due filtri: uno per cliente e uno per prodotto
 * Ottimizzare il service server getProduction e getOrders
-* Fornire l'informazione "produzione massima raggiunta"
+*V Fornire l'informazione "produzione massima raggiunta"
