@@ -49,8 +49,7 @@
                     <select ng-model="filterDetailSatisfied" class="form-control" id="idfilterDetailSatisfied">
                         <option value=""></option>
                         <option value="success">Soddisfatti</option>
-                        <option value="warning">In produzione</option>
-                        <option value="danger">Da soddisfare</option>
+                        <option value="warningDanger">Da Soddisfare</option>
                     </select>
                     <label for="idfilterDetailSatisfied">
                         <button type="button" class="btn btn-default active">
@@ -105,6 +104,7 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th></th>
                         <th class="text-center">Cliente</th>
                         <th class="text-center">Consegna</th>
                         <th class="text-center">Scadenza</th>
@@ -112,15 +112,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="showOrder in orders | filter: filterProduciFacile | filter: filterClientiProduciFacile"
+                    <tr ng-repeat="showOrder in orders | filter: filterProduciFacile | filter: filterClientiProduciFacile | satisfactionFilter : satisfactionFilterOrder"
                         class="item-listing">
+                        <td>{{orders.indexOf(showOrder)}}</td>
                         <td class="text-center">
                             <!--Bottone modifica-->
                             <!--<button ng-click="startUpdateOrder(showOrder)" type="button"
-                                    class="btn btn-default btn-sm" data-toggle="modal" data-target="#updateOrder"
-                                    tooltip="Modifica">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </button>-->
+                    class="btn btn-default btn-sm" data-toggle="modal" data-target="#updateOrder"
+                    tooltip="Modifica">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            </button>-->
                             <!-- Bottone aggiungi dettaglio -->
                             <button type="button" class="btn btn-default btn-sm"
                                     ng-click="beginAddOrderDetail(showOrder)"
@@ -144,9 +145,10 @@
                         <td>
                             <!-- Tabella dettaglio ordine -->
                             <table class="table table-condensed table-hover">
-                                <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile"
+                                <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile | satisfactionFilterDetail"
                                     ng-class="setDetailClass(showSavedDetail)"
                                     class="item-listing">
+
                                     <td class="text-left">
                                         <!--Bottone cancella-->
                                         <button ng-click="startDeleteOrderDetail(showOrder,showSavedDetail)" class="btn btn-default btn-sm"
@@ -163,7 +165,7 @@
                                     <td>
                                         {{minDateDetail(showOrder,showSavedDetail) | date : 'dd/MM/yy'}}
                                         <!--<span ng-show="showSavedDetail.quantity - showSavedDetail.satisfiedQuantity != 0">
-                                        </span>-->
+            </span>-->
                                     </td>
                                     <td>{{showSavedDetail.product.name}}</td>
                                     <td class="text-right">

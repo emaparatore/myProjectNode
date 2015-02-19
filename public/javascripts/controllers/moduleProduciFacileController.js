@@ -687,4 +687,49 @@ function ($scope, $filter, clients, products, orders, productions) {
     
     produciFacile();
 
-}]);
+}])
+.filter('satisfactionFilterOrder', function () {
+    return function (input, type) {
+        var result = [];
+        var i = 0;
+        var founded = false;
+        if (type == "success") {
+            angular.forEach(input, function (item,key) {
+                for (j = 0; j < item.details.length; ++j){
+                    if (item.details[j].satisfiedQuantity >= item.details[j].quantity){
+                        founded = true;
+                        break;
+                    } 
+                }
+                if (founded) {
+                    result[i] = item;
+                    ++i;
+                }
+            });
+        } else if (type == "warningDanger") {
+            
+        } else {
+            result = input;
+        }
+        return result;
+    }
+})
+.filter('satisfactionFilterDetail', function () {
+    return function (input, type) {
+        var result = [];
+        var i = 0;
+        var founded = false;
+        if (type == "success") {
+            angular.forEach(input, function (item, key) {
+                if (item.satisfiedQuantity >= item.quantity) {
+                    result.push(item);
+                }
+            });
+        } else if (type == "warningDanger") {
+
+        } else {
+            result = input;
+        }
+        return result;
+    }
+});
