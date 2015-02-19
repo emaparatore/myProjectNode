@@ -104,7 +104,6 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th></th>
                         <th class="text-center">Cliente</th>
                         <th class="text-center">Consegna</th>
                         <th class="text-center">Scadenza</th>
@@ -112,9 +111,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="showOrder in orders | filter: filterProduciFacile | filter: filterClientiProduciFacile | satisfactionFilterOrder: filterDetailSatisfied"
+                    <tr ng-repeat="showOrder in orders | satisfactionFilterOrder: filterDetailSatisfied | filter: filterProduciFacile | filter: filterClientiProduciFacile"
                         class="item-listing">
-                        <td>{{orders.indexOf(showOrder)}}</td>
                         <td class="text-center">
                             <!--Bottone modifica-->
                             <!--<button ng-click="startUpdateOrder(showOrder)" type="button"
@@ -145,7 +143,7 @@
                         <td>
                             <!-- Tabella dettaglio ordine -->
                             <table class="table table-condensed table-hover">
-                                <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile | satisfactionFilterDetail : filterDetailSatisfied"
+                                <tr ng-repeat="showSavedDetail in showOrder.details | satisfactionFilterDetail : filterDetailSatisfied | filter:filterProduciFacile"
                                     ng-class="setDetailClass(showSavedDetail)"
                                     class="item-listing">
 
@@ -165,7 +163,7 @@
                                     <td>
                                         {{minDateDetail(showOrder,showSavedDetail) | date : 'dd/MM/yy'}}
                                         <!--<span ng-show="showSavedDetail.quantity - showSavedDetail.satisfiedQuantity != 0">
-            </span>-->
+                        </span>-->
                                     </td>
                                     <td>{{showSavedDetail.product.name}}</td>
                                     <td class="text-right">
