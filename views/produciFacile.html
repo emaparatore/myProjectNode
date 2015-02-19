@@ -53,7 +53,7 @@
                     </select>
                     <label for="idfilterDetailSatisfied">
                         <button type="button" class="btn btn-default active">
-                            Soddisfazione &nbsp;
+                            Ordini &nbsp;
                             <span class="glyphicon glyphicon-search lg" aria-hidden="true"></span>
                         </button>
                     </label>
@@ -112,7 +112,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="showOrder in orders | filter: filterProduciFacile | filter: filterClientiProduciFacile | satisfactionFilter : satisfactionFilterOrder"
+                    <tr ng-repeat="showOrder in orders | filter: filterProduciFacile | filter: filterClientiProduciFacile | satisfactionFilterOrder: filterDetailSatisfied"
                         class="item-listing">
                         <td>{{orders.indexOf(showOrder)}}</td>
                         <td class="text-center">
@@ -145,7 +145,7 @@
                         <td>
                             <!-- Tabella dettaglio ordine -->
                             <table class="table table-condensed table-hover">
-                                <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile | satisfactionFilterDetail"
+                                <tr ng-repeat="showSavedDetail in showOrder.details | filter:filterProduciFacile | satisfactionFilterDetail : filterDetailSatisfied"
                                     ng-class="setDetailClass(showSavedDetail)"
                                     class="item-listing">
 

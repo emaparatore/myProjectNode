@@ -694,7 +694,8 @@ function ($scope, $filter, clients, products, orders, productions) {
         var i = 0;
         var founded = false;
         if (type == "success") {
-            angular.forEach(input, function (item,key) {
+            angular.forEach(input, function (item, key) {
+                founded = false;
                 for (j = 0; j < item.details.length; ++j){
                     if (item.details[j].satisfiedQuantity >= item.details[j].quantity){
                         founded = true;
@@ -707,9 +708,22 @@ function ($scope, $filter, clients, products, orders, productions) {
                 }
             });
         } else if (type == "warningDanger") {
-            
+            //founded = false;
+            angular.forEach(input, function (item, key) {
+                founded = false;
+                for (j = 0; j < item.details.length; ++j) {
+                    if (item.details[j].satisfiedQuantity < item.details[j].quantity) {
+                        founded = true;
+                        break;
+                    }
+                }
+                if (founded) {
+                    result[i] = item;
+                    ++i;
+                }
+            });
         } else {
-            result = input;
+            return input;
         }
         return result;
     }
@@ -721,14 +735,21 @@ function ($scope, $filter, clients, products, orders, productions) {
         var founded = false;
         if (type == "success") {
             angular.forEach(input, function (item, key) {
+                founded = false;
                 if (item.satisfiedQuantity >= item.quantity) {
                     result.push(item);
                 }
             });
         } else if (type == "warningDanger") {
-
+            //founded = false;
+            angular.forEach(input, function (item, key) {
+                founded = false;
+                if (item.satisfiedQuantity < item.quantity) {
+                    result.push(item);
+                }
+            });
         } else {
-            result = input;
+             return input;
         }
         return result;
     }
