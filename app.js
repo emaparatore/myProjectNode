@@ -12,8 +12,8 @@ var app = express();
 var mongoose = require('mongoose');
 
 // connessione al database
-mongoose.connect('mongodb://localhost/produciFacileDb');
-//mongoose.connect('mongodb://admin:admin@ds043971.mongolab.com:43971/produci-facile-database')
+//mongoose.connect('mongodb://localhost/produciFacileDb');
+mongoose.connect('mongodb://admin:admin@ds043971.mongolab.com:43971/produci-facile-database')
 
 
 require('./models/Products');
