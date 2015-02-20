@@ -639,7 +639,7 @@ function ($scope, $filter, clients, products, orders, productions) {
     //funzione che setta la classe della quantità in eccesso produzione
     $scope.setProductionClass = function (production) {
         var status = "";
-        if (production.leftQuantity > 50) {
+        if (production.leftQuantity > 10) {
             status = "info";
         }
         return status;
