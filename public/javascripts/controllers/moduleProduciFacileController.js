@@ -418,6 +418,12 @@ function ($scope, $filter, clients, products, orders, productions) {
         $scope.alertOrderDetail = false;
     });
 
+    $('#insertUpdateOrder').on('hide.bs.modal', function () {
+        $scope.alertOrderDetail = false;
+    });
+
+    
+
     //funzione che assegna alla quantità di produzione la quantità massima
     $scope.fillProduction = function () {
         //angular.copy($scope.production.product.maxDailyProduction, $scope.production.quantity);
