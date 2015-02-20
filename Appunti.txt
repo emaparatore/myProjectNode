@@ -8,3 +8,4 @@
 *V Fare due filtri: uno per cliente e uno per prodotto
 * Ottimizzare il service server getProduction e getOrders
 *V Fornire l'informazione "produzione massima raggiunta"
+*Date in italiano

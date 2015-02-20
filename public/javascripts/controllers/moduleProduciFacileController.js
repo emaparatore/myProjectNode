@@ -326,6 +326,7 @@ function ($scope, $filter, clients, products, orders, productions) {
 
     //funzione che prepara la creazione di un dettaglio ordine
     $scope.beginAddOrderDetail = function (order) {
+        lastAction = 'update';
         $('#insertDetailOrder').modal('show');
         $scope.indexUpdate = $scope.orders.indexOf(order);
         $scope.details = angular.copy(order.details);
@@ -411,7 +412,11 @@ function ($scope, $filter, clients, products, orders, productions) {
 
     $('#insertUpdateProduction').on('hide.bs.modal', function () {
         $scope.alertProductionQuantity = false;
-    })
+    });
+
+    $('#insertDetailOrder').on('hide.bs.modal', function () {
+        $scope.alertOrderDetail = false;
+    });
 
     //funzione che assegna alla quantità di produzione la quantità massima
     $scope.fillProduction = function () {
