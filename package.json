@@ -11,9 +11,15 @@
     "debug": "~2.1.1",
     "ejs": "~2.1.4",
     "express": "~4.11.0",
+    "express-session": "^1.10.3",
+    "jade": "^1.9.2",
     "mongoose": "^3.8.21",
     "morgan": "~1.5.1",
-    "serve-favicon": "~2.2.0"
+    "passport": "~0.2.0",
+    "passport-local": "~1.0.0",
+    "serve-favicon": "~2.2.0",
+    "bcrypt-nodejs" : "*",
+    "connect-flash" : "*"
   },
   "engines": {
     "node": "0.10.35"
