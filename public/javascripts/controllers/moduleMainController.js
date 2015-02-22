@@ -1,7 +1,6 @@
 ﻿angular.module('moduleMainController', [])
 .controller('MainController', [
-'$scope',
-function ($scope) {
-    $scope.message = {}
-
+'$scope','$location',
+function ($scope, $location) {
+    $scope.message = {};
 }]);
