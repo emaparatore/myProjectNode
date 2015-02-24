@@ -119,7 +119,7 @@ module.exports = function (passport) {
 
     /* GET the list of products */
     router.get('/products', isAuthenticated, function (req, res, next) {
-        Product.find(function (err, data) {
+        Product.find({ _idUser: req.user._id }, function (err, data) {
             if (err) { return next(err); }
 
             res.json(data);
@@ -129,6 +129,7 @@ module.exports = function (passport) {
     /* PUT a new product in the database */
     router.put('/product', isAuthenticated, function (req, res, next) {
         var product = new Product(req.body);
+        product._idUser = req.user._id;
         product.save(function (err, data) {
             if (err) { return next(err); }
             res.json(data);
@@ -155,7 +156,8 @@ module.exports = function (passport) {
 
     /* GET the list of clients */
     router.get('/clients', isAuthenticated, function (req, res, next) {
-        Client.find(function (err, data) {
+        
+        Client.find({ _idUser : req.user._id }, function (err, data) {
             if (err) { return next(err); }
             res.json(data);
         });
@@ -164,6 +166,7 @@ module.exports = function (passport) {
     /* PUT a new client in the database */
     router.put('/client', isAuthenticated, function (req, res, next) {
         var client = new Client(req.body);
+        client._idUser = req.user._id;
         client.save(function (err, data) {
             if (err) { return next(err); }
             res.json(data);
@@ -189,7 +192,7 @@ module.exports = function (passport) {
 
     /* GET the list of orders */
     router.get('/orders', isAuthenticated, function (req, res, next) {
-        Order.find(function (err, data) {
+        Order.find({ _idUser: req.user._id }, function (err, data) {
             if (err) { return next(err); }
             res.json(data);
         });
@@ -198,6 +201,7 @@ module.exports = function (passport) {
     /* PUT a new order in the database */
     router.put('/order', isAuthenticated, function (req, res, next) {
         var order = new Order(req.body);
+        order._idUser = req.user._id;
         order.save(function (err, data) {
             if (err) { return next(err); }
             res.json(data);
@@ -222,7 +226,7 @@ module.exports = function (passport) {
 
     /* GET the list of productions */
     router.get('/productions', isAuthenticated, function (req, res, next) {
-        Production.find(function (err, data) {
+        Production.find({ _idUser: req.user._id }, function (err, data) {
             if (err) { return next(err); }
 
             res.json(data);
@@ -232,6 +236,7 @@ module.exports = function (passport) {
     /* PUT a new production in the database */
     router.put('/production', isAuthenticated, function (req, res, next) {
         var production = new Production(req.body);
+        production._idUser = req.user._id;
         production.save(function (err, data) {
             if (err) { return next(err); }
             res.json(data);

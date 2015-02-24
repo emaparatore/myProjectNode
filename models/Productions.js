@@ -1,6 +1,7 @@
 ﻿var mongoose = require('mongoose');
 
 var ProductionSchema = new mongoose.Schema({
+    _idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
     date: { type: Date },
     quantity: { type: Number, default: 0 },
     product: {

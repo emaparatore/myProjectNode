@@ -1,6 +1,7 @@
 ﻿var mongoose = require('mongoose');
 
 var OrderSchema = new mongoose.Schema({
+    _idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
     date: { type: Date },
     lastDay : {type: Date},
     client: {

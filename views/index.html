@@ -76,7 +76,9 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" ui-sref="home">SLogo</a>
+                            <a class="navbar-brand" ui-sref="home"> Logo
+                                <!--<img src="/images/logo_1449076_web (2).jpg"/>-->
+                            </a>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -99,7 +101,14 @@
                                 <li><a ui-sref="produciFacile">Produci-Facile</a></li>
                             </ul>
 
-                            <ul class="nav navbar-nav navbar-right"></ul>
+                            <form class="navbar-form navbar-right">
+                                <button type="submit" class="btn btn-info"
+                                        tooltip="Logout"
+                                        tooltip-placement="bottom"
+                                        ng-click="beginLogout()">
+                                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                                </button>
+                            </form>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
                 </nav>
@@ -109,6 +118,39 @@
         <div class="view-container">
             <ui-view class="view-frame">
             </ui-view>
+        </div>
+
+        <!--Modal message-->
+        <div class="modal fade" id="modalLogoutMessage" tabindex="-1" role="dialog" aria-labelledby="modalLogoutMessageLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title"
+                            id="modalLogoutMessageLabel">
+                            {{message.title}}
+                            <span ng-show="message.modalita=='delete'" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            <span ng-show="message.modalita=='update'" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info role=" alert">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"> </span>
+                            {{message.body}}
+                        </div>
+                        <!--<img src="/images/logo_1449076_web (2).jpg" />-->
+                    </div>
+                    <div class="modal-footer">
+                        <button ng-click="logout()" type="button" class="btn btn-default" data-dismiss="modal">Sì</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
