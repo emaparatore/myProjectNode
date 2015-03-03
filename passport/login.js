@@ -26,6 +26,19 @@ module.exports = function (passport) {
                     }
                     // User and password both match, return user from done method
                     // which will be treated like success
+
+                    //var thisUser = user;
+                    ////var userApplicationPanel = new ApplicationPanel();
+                    //userApplicationPanel._idUser = thisUser._id;
+                    //userApplicationPanel.dateStore = new Date(2015, 1, 14);
+                    //userApplicationPanel.save(function (err) {
+                    //    if (err) {
+                    //        console.log('Error in Saving userApplicationPanel: ' + err);
+                    //        throw err;
+                    //    }
+                    //    console.log("Creato Pannello Applicazione");
+                    //})
+
                     return done(null, user);
                 }
             );

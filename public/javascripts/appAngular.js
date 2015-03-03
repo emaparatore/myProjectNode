@@ -49,8 +49,10 @@ function ($stateProvider, $urlRouterProvider) {
               }],
               productionsPromise: ['productions', function (productions) {
                   return productions.getAll();
+              }],
+              applicationPanelPromise: ['applicationPanels', function (applicationPanels) {
+                  return applicationPanels.getAll();
               }]
-              
           }
       });
 

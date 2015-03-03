@@ -1,0 +1,9 @@
+﻿select::-ms-expand {
+    display: none;
+}  
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    text-overflow: ellipsis; /* this is important! */
+}

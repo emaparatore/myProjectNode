@@ -8,7 +8,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-md-12">
         <!-- Filtro -->
         <div>
             <h3>
@@ -68,7 +68,7 @@
 <!-- Ordini -->
 <div class="row">
 
-    <div class="col-sm-7">
+    <div class="col-md-7">
         <h2>
             Ordini
             <button type="button" class="btn btn-primary"
@@ -81,7 +81,7 @@
     </div>
 
     <!-- Produzione -->
-    <div class="col-sm-5">
+    <div class="col-md-5">
         <h2>
             Produzione
             <button type="button" class="btn btn-primary"
@@ -209,18 +209,25 @@
                             </button>-->
                             <!--Bottone cancella-->
                             <button ng-click="startDeleteProduction(showProduction)" class="btn btn-default btn-sm"
-                                    tooltip="Cancella">
+                                    tooltip="Cancella"
+                                    ng-hide="checkDisabled(showProduction)">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>
+                            <span class="glyphicon glyphicon-flag" aria-hidden="true" ng-show="checkDisabled(showProduction)"
+                                  tooltip="Produzione Archiviata"></span>
                         </td>
                         <td class="text-center">
-                            <button class="btn btn-default btn-sm " ng-click="beginUpdateDateProduction(showProduction)">
+                            <button class="btn btn-default btn-sm "
+                                    ng-click="beginUpdateDateProduction(showProduction)"
+                                    ng-disabled="checkDisabled(showProduction)">
                                 {{showProduction.date | date:'dd/MM/yy'}}
                             </button>
                         </td>
                         <td>{{showProduction.product.name}}</td>
                         <td class="text-center">
-                            <button class="btn btn-default btn-sm" ng-click="beginUpdateProductionQuantity(showProduction)">
+                            <button class="btn btn-default btn-sm"
+                                    ng-click="beginUpdateProductionQuantity(showProduction)"
+                                    ng-disabled="checkDisabled(showProduction)">
                                 {{showProduction.quantity}}
                             </button>
                         </td>
@@ -236,6 +243,22 @@
         </div>
     </div>
 </div>
+
+<!-- Archivia -->
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h3>
+            <button type="button" class="btn btn-primary"
+                    ng-click="beginStore()"
+                    tooltip="Conferma e Archivia i tuoi dati">
+                Conferma e Archivia &nbsp;
+                <span class=" glyphicon glyphicon-thumbs-up" aria-hidden="true">
+                </span>
+            </button>
+        </h3>
+    </div>
+</div>
+
 
 
 <!-- Modal Insert Order-->
@@ -271,7 +294,6 @@
                             <div class="form-group"
                                  ng-class="{'has-success has-feedback': insertUpdateOrderForm.input1.$valid}">
                                 <!--{{order.date | date:'dd/MM/yyyy'}}-->
-                                <label for="orderInput1">Da
                                 <label for="orderInput1">Data</label>
                                 <input class="form-control"
                                        name="input1"
@@ -283,7 +305,7 @@
                                 ng-show="insertOrderForm.input1.$valid"></span>-->
                                 <div style="display:inline-block; min-height:290px;">
                                     <datepicker ng-model="order.date"
-                                                min-date="minDate"
+                                                min-date="dateLastStore"
                                                 show-weeks="false"
                                                 class="well well-sm"></datepicker>
                                 </div>
@@ -497,6 +519,7 @@
                                datepicker-popup="dd/MM/yyyy"
                                required />
                         <datepicker ng-model="production.date"
+                                    min-date="dateLastStore"
                                     show-weeks="false"
                                     class="well well-sm"
                                     date-disabled="disabled(date, mode)"></datepicker>
@@ -618,6 +641,7 @@
                 <div style="display:inline-block; min-height:290px;">
                     <datepicker ng-model="date"
                                 show-weeks="false"
+                                min-date="dateLastStore"
                                 class="well well-sm"></datepicker>
                 </div>
                 <div class="text-center">
@@ -891,7 +915,7 @@
             <div class="modal-body">
                 <div style="display:inline-block; min-height:290px;">
                     <datepicker ng-model="date"
-                                min-date="minDate"
+                                min-date="dateLastStore"
                                 show-weeks="false"
                                 class="well well-sm"
                                 date-disabled="disabled(date, mode)"></datepicker>
@@ -904,6 +928,55 @@
                             ng-click="updateDateProduction()">
                         Salva &nbsp;
                         <span class="glyphicon glyphicon-floppy-disk lg" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal archivia dati -->
+<div class="modal fade" id="modalStore" tabindex="-1" role="dialog" aria-labelledby="modalStoreLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"
+                    id="modalStoreLabel">
+                    Conferma e archivia i tuoi dati &nbsp;
+                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info" role="alert">
+                    Data ultima archiviazione : {{dateLastStore | date: 'dd/MM/yyyy'}}
+                </div>
+                <div style="display:inline-block; min-height:290px;">
+                    <datepicker ng-model="applicationPanel.dateStore"
+                                min-date="dateLastStore"
+                                show-weeks="false"
+                                class="well well-sm"
+                                date-disabled="disabledStore(date, mode)"></datepicker>
+                </div>
+                <div class="alert alert-warning" role="alert">
+                    Conferma e archivia gli ordini e la produzione fino al <b>{{applicationPanel.dateStore | date:'dd/MM/yyyy'}}</b>.
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button type="button"
+                            class="btn btn-primary btn-lg"
+                            tooltip="Conferma e Archivia i tuoi dati"
+                            tooltip-placement="top"
+                            ng-click="store()">
+                        <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>

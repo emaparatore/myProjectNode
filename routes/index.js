@@ -7,7 +7,7 @@ var Product = mongoose.model('Product');
 var Client = mongoose.model('Client');
 var Order = mongoose.model('Order');
 var Production = mongoose.model('Production');
-
+var ApplicationPanel = mongoose.model('ApplicationPanel');
 
 
 
@@ -243,7 +243,21 @@ module.exports = function (passport) {
         });
     });
 
+    /* POST an applicationPanel by id */
+    router.post('/applicationPanel/:id', isAuthenticated, function (req, res, next) {
+        ApplicationPanel.findByIdAndUpdate(req.params.id, req.body, function (err, data) {
+            if (err) return next(err);
+            res.json(data);
+        });
+    });
 
+    /* GET the user's application panel */
+    router.get('/applicationPanel', isAuthenticated, function (req, res, next) {
+        ApplicationPanel.find({ _idUser: req.user._id }, function (err, data) {
+            if (err) { return next(err); }
+            res.json(data);
+        });
+    });
 
    
 

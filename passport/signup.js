@@ -1,5 +1,6 @@
 ﻿var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
+var ApplicationPanel = require('../models/ApplicationPanels')
 var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function (passport) {
@@ -25,6 +26,7 @@ module.exports = function (passport) {
                         // if there is no user with that email
                         // create the user
                         var newUser = new User();
+                        var userApplicationPanel = new ApplicationPanel();
 
                         // set the user's local credentials
                         newUser.username = username;
@@ -34,13 +36,26 @@ module.exports = function (passport) {
                         newUser.lastName = req.param('lastName');
 
                         // save the user
-                        newUser.save(function (err) {
+                        newUser.save(function (err, user) {
                             if (err) {
                                 console.log('Error in Saving user: ' + err);
                                 throw err;
                             }
-                            console.log('User Registration succesful');
-                            return done(null, newUser);
+                            var thisUser = user;
+                            //var userApplicationPanel = new ApplicationPanel();
+                            userApplicationPanel._idUser = thisUser._id;
+                            userApplicationPanel.dateStore = new Date(2015, 1, 14);
+                            userApplicationPanel.save(function (err) {
+                                if (err) {
+                                    console.log('Error in Saving userApplicationPanel: ' + err);
+                                    throw err;
+                                }
+                                console.log("Creato Pannello Applicazione");
+                                console.log('User Registration succesful');
+                                return done(null, newUser);
+                            })
+                            //console.log(user._id);
+                            
                         });
                     }
                 });

@@ -6,12 +6,17 @@
 'products',
 'orders',
 'productions',
-function ($scope, $filter, clients, products, orders, productions) {
+'applicationPanels',
+function ($scope, $filter, clients, products, orders, productions, applicationPanels) {
     $scope.clients = clients.clients;
     $scope.products = products.products;
     $scope.orders = orders.orders;
     
     $scope.productions = productions.productions;
+
+    $scope.applicationPanel = applicationPanels.applicationPanels[0];
+
+    $scope.dateLastStore = angular.copy($scope.applicationPanel.dateStore);
 
     $scope.indexDelete = -1;
     $scope.indexUpdate = -1;
@@ -695,7 +700,37 @@ function ($scope, $filter, clients, products, orders, productions) {
         return result;
     }
 
+
+    //funzione che avvia l'archiviazione
+    $scope.beginStore = function () {
+        $('#modalStore').modal('show');
+        $scope.applicationPanel.dateStore = angular.copy($scope.dateLastStore);
+    }
+
+    //funzione che produce l'archiviazione
+    $scope.store = function () {
+        $('#modalStore').modal('hide');
+        applicationPanels.update($scope.applicationPanel._id, $scope.applicationPanel, function () {
+            setTimeout(function () {
+                $('#modalSuccessMessage').modal('show');
+            }, 500);
+            produciFacile();
+            $scope.message.title = 'Archiviazione';
+            $scope.message.body = 'Dati archiviati';
+            $scope.message.modalita = 'store';
+            $scope.dateLastStore = angular.copy($scope.applicationPanel.dateStore);
+        })
+    }
     
+    //funzione che disabilita i pulsanti per le produzioni archiviate
+    $scope.checkDisabled = function (production) {
+        var result = false
+        if (new Date(production.date) <= new Date($scope.dateLastStore)) {
+            result = true;
+        }
+        return result;
+    }
+
     produciFacile();
 
 }])

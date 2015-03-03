@@ -15,9 +15,23 @@ require('./models/Clients');
 require('./models/Orders');
 require('./models/Productions');
 
+//var options = {
+//    db: { native_parser: true },
+//    server: { poolSize: 5 },
+//    replset: { rs_name: 'myReplicaSetName' },
+//    user: 'myUserName',
+//    pass: 'myPassword'
+//}
+
+//options.server.socketOptions = options.replset.socketOptions = { keepAlive: 1 };
+
 // connessione al database
 //mongoose.connect('mongodb://localhost/produciFacileDb');
 mongoose.connect('mongodb://admin:admin@ds043971.mongolab.com:43971/produci-facile-database');
+
+mongoose.connection.on('error', function (error) {
+    console.log("Errore connessione al DB");
+});
 
 var app = express();
 

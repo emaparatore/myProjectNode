@@ -1,8 +1,11 @@
-Program Files\MongoDB 2.6 Standard\bin\mongo.exe --dbpath C:\Users\e.paratore\Documents\Studio\data
+cd Program Files\MongoDB 2.6 Standard\bin\mongo.exe --dbpath C:\Users\e.paratore\Documents\Studio\data
 
 
 
 C:\Program Files\MongoDB 2.6 Standard\bin>mongod.exe --dbpath C:\Users\e.paratore\Documents\Studio\data
+
+MONGO SHELL
+C:\Program Files\MongoDB 2.6 Standard\bin>mongo --shell --host AT-EPARATORE produciFacileDb
 
 
 Repositori
@@ -10,3 +13,12 @@ https://git.heroku.com/shrounded-atoll-6089.git
 
 URL
 https://shrouded-atoll-6089.herokuapp.com
+
+
+
+****Per inserire il pannello applicativo a chi non ce l'ha.****
+
+db.applicationpanels.insert({
+_idUser : ObjectId("54e8cdc9fc82cd5c19668406"), dateStore : ISODate("2015-01-31T23:00:00Z")
+})
+
